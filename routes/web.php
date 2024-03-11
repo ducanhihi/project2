@@ -29,3 +29,5 @@ Route::get('/customer/home', function () {
 Route::get('/login', [AuthController::class, 'viewLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// sua fil nay
