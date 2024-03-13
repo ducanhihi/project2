@@ -33,13 +33,22 @@
             </form>
 
             <div class="d-flex flex-row align-items-center justify-content-center">
-                <p class="me-2">
-                    {{\Illuminate\Support\Facades\Auth::user()->name}}
-                </p>
-                <form method="post" action="{{route('logout')}}">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-light me-2">Logout</button>
-                </form>
+                @if(\Illuminate\Support\Facades\Auth::check())
+                    <a href="" class="header-icon header-icon-user"><i class="icon-user-2"></i>{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+                    <form method="post" action="{{route('logout')}}">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-light me-2">Logout</button>
+                    </form>
+                @else
+                    <a href="{{route('login')}}" class="header-icon header-icon-user"><i class="icon-user-2"></i>Login</a>
+                @endif
+{{--                <p class="me-2">--}}
+{{--                    {{\Illuminate\Support\Facades\Auth::user()->name}}--}}
+{{--                </p>--}}
+{{--                <form method="post" action="{{route('logout')}}">--}}
+{{--                    @csrf--}}
+{{--                    <button type="submit" class="btn btn-outline-light me-2">Logout</button>--}}
+{{--                </form>--}}
             </div>
         </div>
     </div>

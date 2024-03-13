@@ -53,8 +53,13 @@ class AuthController extends Controller
     // POST: /dang xuat
     function logout()
     {
-        Auth::logout();
-        return redirect()->route('login');
+        if(Auth::user()->role == 'customer') {
+            Auth::logout();
+            return redirect()->route('customer.home');
+        } else if(Auth::user()->role == 'admin') {
+            Auth::logout();
+            return redirect()->route('customer.home');
+        }
     }
 
 
