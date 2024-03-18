@@ -18,8 +18,9 @@ class RegisterController extends Controller
             $existingUser = User::where('email', $request->input('email'))->first();
             if ($existingUser) {
                 // Email đã tồn tại trong cơ sở dữ liệu
+                sweetalert()->addWarning('Email đã tồn tại');
                 // Hiển thị thông báo lỗi trên trang register
-                return redirect()->back()->withErrors(['error' => 'Email đã tồn tại trong hệ thống!']);
+                return redirect()->back();
             } else {
                 // Email chưa tồn tại, tiến hành tạo người dùng mới
                 $user = new User();
@@ -30,8 +31,8 @@ class RegisterController extends Controller
                 $user->address = $request->input('address');
                 $user->role = 'customer';
                 $user->save();
-
-                return redirect()->route('login')->with('success', 'Người dùng đã được tạo thành công.');
+                flash() -> addSuccess('Đăng ký thành công');
+                return redirect()->route('login');
             }
         } catch (Exception $e) {
             // Xử lý ngoại lệ nếu có

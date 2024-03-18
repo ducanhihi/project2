@@ -46,7 +46,8 @@ class AuthController extends Controller
             }
         } else {
             // Chuyen huong ve login
-            return redirect()->back()->withErrors(['error' => 'Sai email hoặc mật khẩu. Vui lòng thử lại.']);
+            sweetalert()->addWarning('Sai mật khẩu');
+            return redirect()->back();
         }
     }
 
