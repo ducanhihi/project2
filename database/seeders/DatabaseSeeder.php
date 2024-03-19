@@ -25,16 +25,18 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin1@gmail.com',
             'phone' => '92929282828',
             'address' => 'A17',
-            'password' => Hash::make('bkacad123'),
-            'role' => 'admin'
+            'DOB' => '1990-05-15',
+            'role' => 'admin',
+            'password' => Hash::make('123'),
         ]);
         DB::table('users')->insert([
             'name' => 'Customer ',
             'email' => 'customer1@gmail.com',
             'phone' => '92929282829',
             'address' => 'A17',
-            'password' => Hash::make('bkacad123'),
-            'role' => 'customer'
+            'DOB' => '1990-05-15',
+            'role' => 'customer',
+            'password' => Hash::make('123'),
         ]);
     }
 }
