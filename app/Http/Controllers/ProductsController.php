@@ -9,7 +9,7 @@ class ProductsController extends Controller
 {
     function viewAdminProducts() {
         $allProducts = DB::table('products')
-            ->select(['isbn_code', 'name', 'price'])
+            ->select(['id','isbn_code', 'name', 'price','created_at', 'updated_at'])
             ->get();
         return view('admin.products', ['allProducts' => $allProducts]);
 

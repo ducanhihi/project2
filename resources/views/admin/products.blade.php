@@ -17,14 +17,14 @@
                 <td class="fw-bold">{{$products-> name}}</td>
                 <td class="fw-bold">{{$products-> price}}</td>
                 <td>{{$products-> created_at}}</td>
-                                <td class="d-flex justify-content-around align-content-center">
-                                    <a class="btn btn-sm btn-warning" href="admin/home/{{$products->id}}/edit">Sửa</a>
-                                    <form onsubmit="return confirm('Ban co muon xoa')" action="/home/news/{{$products-> id}}" method="POST">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button class="btn btn-sm btn-danger">Xoa</button>
-                                    </form>
-                                </td>
+{{--                                <td class="d-flex justify-content-around align-content-center">--}}
+{{--                                    <a class="btn btn-sm btn-warning" href="admin/home/{{$products->id}}/edit">Sửa</a>--}}
+{{--                                    <form onsubmit="return confirm('Ban co muon xoa')" action="/home/news/{{$products-> id}}" method="POST">--}}
+{{--                                        @method('DELETE')--}}
+{{--                                        @csrf--}}
+{{--                                        <button class="btn btn-sm btn-danger">Xoa</button>--}}
+{{--                                    </form>--}}
+{{--                                </td>--}}
             </tr>
         @empty
         @endforelse

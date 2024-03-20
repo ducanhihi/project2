@@ -14,6 +14,9 @@
     <div>
         @yield('content')
     </div>
+    <div>
+        @include('layout.sidebar')
+    </div>
 
 </body>
 </html>
