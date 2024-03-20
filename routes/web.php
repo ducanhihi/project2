@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/login');
-
 });
 Route::get('/admin/home', function () {
     return view('admin.home');
@@ -36,7 +35,13 @@ Route::get('/register', [RegisterController::class, 'viewRegister'])->name('regi
 Route::post('/register', [RegisterController::class, 'register']);
 
 ///product
-Route::get('admin/products', [ProductsController::class, 'viewAdminProducts'])->name('admin.products');
+Route::get('/admin/products', [ProductsController::class, 'viewAdminProducts'])->name('admin.products');
+Route::post('/admin/create/products', [ProductsController::class, 'createProducts']);
+Route::delete('/home/products/{id}', [ProductsController::class, 'deleteProductsById']);
+Route::post('/admin/edit/products/{id}', [ProductsController::class, 'editProductsById']);
+
+
+
 
 //category
 Route::get('admin/categories', [CategoriesController::class, 'viewAdminCategories'])->name('admin.categories');
