@@ -37,14 +37,24 @@
         .sidebar .nav-link.active {
             color: #0d6efd;
         }
+        .sidebar a {
+            color: black;
+            text-decoration: none;
+            padding: 10px 15px;
+        }
+
+        .sidebar a:hover {
+            background-color: #333333;
+            color: white;
+        }
     </style>
 </head>
 <body>
 <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" >
     <div class="position-sticky" style="margin-top: 10px">
         <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{route('admin.home')}}">
+            <li class="nav">
+                <a class="nav-link" aria-current="page" href="{{route('admin.home')}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <span class="ml-2">Home</span>
                 </a>
@@ -100,7 +110,7 @@
             </li>
             <li class="nav-item">
                 <a class="btn btn-sm btn-primary ml-3 mt-2" href="https://themesberg.com">
-                    By Themesberg ❤️
+                     ❤️
                 </a>
             </li>
         </ul>
