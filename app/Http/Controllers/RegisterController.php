@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 
 class RegisterController extends Controller
 {
@@ -27,9 +29,17 @@ class RegisterController extends Controller
                 $user->name = $request->input('name');
                 $user->email = $request->input('email');
                 $user->phone = $request->input('phone');
-                $user->password = Hash::make($request->input('password'));
                 $user->address = $request->input('address');
-                $user->role = 'customer';
+                $user->password = Hash::make($request->input('password'));
+                $user->email_verified_at = now();
+                $user->role = 'admin';
+                $user->remember_token = Str::random(10); // Tạo remember_token ngẫu nhiên
+                $user->DOB = $request->input('DOB', '2000-01-01');
+
+
+                // Cập nhật thời gian tạo và cập nhật
+                $user->created_at = now();
+                $user->updated_at = now();
                 $user->save();
                 flash() -> addSuccess('Đăng ký thành công');
                 return redirect()->route('login');

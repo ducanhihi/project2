@@ -64,6 +64,22 @@
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input name="address" type="text" id="form3Example3c" class="form-control" />
+                                            <label class="form-label" for="form3Example3c">Your Address</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input name="DOB" type="date" id="form3Example3c" class="form-control" />
+                                            <label class="form-label" for="form3Example3c">Your DOB</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <input name="password" type="password" id="form3Example4c" class="form-control" />
