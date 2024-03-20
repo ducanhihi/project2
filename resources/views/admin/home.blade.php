@@ -65,7 +65,7 @@
         </div>
 
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" style="height: 70px; color: white; background-color: #333333 "  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
                     <p class="me-2">
                         {{\Illuminate\Support\Facades\Auth::user()->name}}
                     </p>
@@ -87,7 +87,7 @@
 <div class="container-fluid">
     <div class="row">
         <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-            <div class="position-sticky">
+            <div class="position-sticky" style="margin-top: 10px">
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">
@@ -312,6 +312,6 @@
         showArea: true
     });
 </script>
-{{--aaaa--}}
+aaaa
 </body>
 </html>
