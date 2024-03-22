@@ -36,9 +36,9 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 ///product
 Route::get('/admin/products', [ProductsController::class, 'viewAdminProducts'])->name('admin.products');
-Route::post('/admin/create/products', [ProductsController::class, 'createProducts']);
-Route::delete('/home/products/{id}', [ProductsController::class, 'deleteProductsById']);
-Route::post('/admin/edit/products/{id}', [ProductsController::class, 'editProductsById']);
+Route::post('/admin/create/product', [ProductsController::class, 'createProduct']);
+Route::delete('/home/product/{id}', [ProductsController::class, 'deleteProductById']);
+Route::post('/admin/edit/product/{id}', [ProductsController::class, 'editProductById']);
 // Trong file routes/web.php
 
 
@@ -46,11 +46,17 @@ Route::post('/admin/edit/products/{id}', [ProductsController::class, 'editProduc
 
 
 //category
-Route::get('admin/categories', [CategoriesController::class, 'viewAdminCategories'])->name('admin.categories');
+Route::get('/admin/categories', [CategoriesController::class, 'viewAdminCategories'])->name('admin.categories');
+Route::post('/admin/create/category', [CategoriesController::class, 'createCategory']);
+Route::delete('/home/category/{id}', [CategoriesController::class, 'deleteCategoryById']);
+Route::post('/admin/edit/category/{id}', [CategoriesController::class, 'editCategoryById']);
+
 
 //brands
-Route::get('admin/brands', [BrandsController::class, 'viewAdminBrands'])->name('admin.brands');
-
+Route::get('/admin/brands', [BrandsController::class, 'viewAdminBrands'])->name('admin.brands');
+Route::post('/admin/create/brand', [BrandsController::class, 'createBrand']);
+Route::delete('/home/brand/{id}', [BrandsController::class, 'deleteBrandById']);
+Route::post('/admin/edit/brand/{id}', [BrandsController::class, 'editBrandById']);
 
 
 // sua fil nay

@@ -13,7 +13,7 @@ class ProductsController extends Controller
             ->get();
         return view('admin.products', ['allProducts' => $allProducts]);
     }
-    public function createProducts(Request $request) {
+    public function createProduct(Request $request) {
         $isbn_code = $request->get('isbn_code');
         $name = $request->get('name');
         $price = $request->get('price');
@@ -34,13 +34,13 @@ class ProductsController extends Controller
         flash() -> addSuccess('Add product succesfully!');
         return redirect()->back();
     }
-    public function deleteProductsById($id){
+    public function deleteProductById($id){
         DB::table('products') -> delete($id);
         return redirect() -> back();
     }
 
 
-    public function editProductsById ($id, Request $request) {
+    public function editProductById ($id, Request $request) {
         // Bước 1: kiểm tra xem bài viết có tồn tại hay không
         $products = DB::table('products') -> find($id);
         if ($products == null) {
@@ -74,10 +74,5 @@ class ProductsController extends Controller
             flash() -> addSuccess('Cap nhat thanh cong');
         }
         return redirect()->route('admin.products');
-    }
-
-    public function getProduct($id){
-        $product = products::find($id); // Giả sử model sản phẩm là Product
-        return response()->json($product);
     }
 }

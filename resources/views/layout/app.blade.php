@@ -12,6 +12,9 @@
         @include('layout.header')
     </div>
     <div>
+        @include('layout.cssCRUD')
+    </div>
+    <div>
         @yield('content')
     </div>
     <div>
