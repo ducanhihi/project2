@@ -32,7 +32,7 @@ class RegisterController extends Controller
                 $user->address = $request->input('address');
                 $user->password = Hash::make($request->input('password'));
                 $user->email_verified_at = now();
-                $user->role = 'admin';
+                $user->role = 'customer';
                 $user->remember_token = Str::random(10); // Tạo remember_token ngẫu nhiên
                 $user->DOB = $request->input('DOB', '2000-01-01');
 

@@ -44,7 +44,7 @@ class ProductsController extends Controller
         // Bước 1: kiểm tra xem bài viết có tồn tại hay không
         $products = DB::table('products') -> find($id);
         if ($products == null) {
-            return redirect('//admin/products');
+            return redirect('/admin/products');
         }
         //buowc2 capnhat thong tin
         $isbn_code = $request->get('isbn_code');
@@ -74,5 +74,10 @@ class ProductsController extends Controller
             flash() -> addSuccess('Cap nhat thanh cong');
         }
         return redirect()->route('admin.products');
+    }
+
+    public function getProduct($id){
+        $product = products::find($id); // Giả sử model sản phẩm là Product
+        return response()->json($product);
     }
 }

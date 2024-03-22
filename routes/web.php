@@ -39,6 +39,8 @@ Route::get('/admin/products', [ProductsController::class, 'viewAdminProducts'])-
 Route::post('/admin/create/products', [ProductsController::class, 'createProducts']);
 Route::delete('/home/products/{id}', [ProductsController::class, 'deleteProductsById']);
 Route::post('/admin/edit/products/{id}', [ProductsController::class, 'editProductsById']);
+// Trong file routes/web.php
+
 
 
 
