@@ -43,8 +43,6 @@ Route::post('/admin/edit/product/{id}', [ProductsController::class, 'editProduct
 
 
 
-
-
 //category
 Route::get('/admin/categories', [CategoriesController::class, 'viewAdminCategories'])->name('admin.categories');
 Route::post('/admin/create/category', [CategoriesController::class, 'createCategory']);
@@ -60,3 +58,4 @@ Route::post('/admin/edit/brand/{id}', [BrandsController::class, 'editBrandById']
 
 
 // sua fil nay
+Route::post('/search', [\App\Http\Controllers\SearchController::class, 'searchByName']);
