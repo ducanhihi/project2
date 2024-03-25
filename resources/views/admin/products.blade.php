@@ -25,14 +25,14 @@
                                     <label for="selectAll"></label>
                                 </span>
                         </th>
-                        <th class="text-center fw-bold">ID</th>
-                        <th class="text-center fw-bold">ISBNcode</th>
+                        <th class="text-center fw-bold">Mã sản phẩm</th>
                         <th class="text-center fw-bold">Name</th>
                         <th class="text-center fw-bold">Price</th>
                         <th class="text-center fw-bold">Quantity</th>
                         <th class="text-center fw-bold">ID Category</th>
                         <th class="text-center fw-bold">ID Brand</th>
-                        <th class="text-center fw-bold">Ngày tạo</th>
+                        <th class="text-center fw-bold">Ảnh</th>
+                        <th class="text-center fw-bold">Mô tả</th>
                         <th class="text-center fw-bold">Hành động</th>
                     </tr>
                     </thead>
@@ -46,15 +46,15 @@
                             </span>
                         </td>
                         <td class="text-center fw-bold">{{$product-> id}}</td>
-                        <td class="text-center fw-bold">{{$product-> isbn_code}}</td>
+                        <td class="text-center fw-bold">{{$product-> product_code}}</td>
                         <td class="text-center fw-bold">{{$product-> name}}</td>
                         <td class="text-center fw-bold">{{$product-> price}}</td>
                         <td class="text-center fw-bold">{{$product-> quantity}}</td>
                         <td class="text-center fw-bold">{{$product-> category_id}}</td>
-                        <td class="text-center fw-bold">{{$product-> brand_id}}</td>
-                        <td>{{$product-> created_at}}</td>
+                        <td class="text-center fw-bold">{{$product-> image}}</td>
+                        <td>{{$product-> description}}</td>
                         <td class="d-flex justify-content-around align-content-center">
-                            <a href="#editProductModal" data-id="{{$product -> id}}" data-isbn_code="{{$product->isbn_code}}" data-name="{{$product->name}}" data-quantity="{{$product->quantity}}" data-price="{{$product->price}}" data-category_id="{{$product->category_id}}" data-brand_id="{{$product->brand_id}}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
+                            <a href="#editProductModal" data-id="{{$product -> id}}" data-isbn_code="{{$product->product_code}}" data-name="{{$product->name}}" data-quantity="{{$product->quantity}}" data-price="{{$product->price}}" data-category_id="{{$product->category_id}}" data-brand_id="{{$product->brand_id}}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
                             <a href="#deleteProductModal" data-id="{{$product -> id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
                         </td>
                     </tr>
@@ -89,8 +89,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>ISBNcode</label>
-                            <input type="text" name="isbn_code" class="form-control" required="">
+                            <label>Mã sản phẩm</label>
+                            <input type="text" name="product_code" class="form-control" required="">
                         </div>
                         <div class="form-group">
                             <label>Name</label>
@@ -103,6 +103,10 @@
                         <div class="form-group">
                             <label>Price</label>
                             <input type="text" name="price" class="form-control" required="">
+                        </div>
+                        <div class="form-group">
+                            <label>Ảnh</label>
+                            <input type="file" name="image" class="form-control" required="">
                         </div>
                         <div class="form-group">
                             <label>CategoryId</label>
@@ -138,8 +142,8 @@
                             <input type="text" name="id" class="form-control" required="" value="{{$product -> id}}">
                         </div>
                          <div class="form-group">
-                            <label>ISBNcode</label>
-                            <input type="text" name="isbn_code" class="form-control" required="" value="{{$product -> isbn_code}}">
+                            <label>Mã sản phẩm</label>
+                            <input type="text" name="product_code" class="form-control" required="" value="{{$product -> product_code}}">
                         </div>
                         <div class="form-group">
                             <label>Name</label>
@@ -216,19 +220,21 @@
         $(document).ready(function(){
             $('.edit').on('click', function(){
                 var id = $(this).data('id');
-                var isbn_code = $(this).data('isbn_code');
+                var product_code = $(this).data('product_code');
                 var name = $(this).data('name');
                 var quantity = $(this).data('quantity');
+                var image = $(this).data('image');
                 var price = $(this).data('price');
                 var category_id = $(this).data('category_id');
                 var brand_id = $(this).data('brand_id');
 
                 $('#editProductModal input[name="id"]').val(id);
-                $('#editProductModal input[name="isbn_code"]').val(isbn_code);
+                $('#editProductModal input[name="product_code"]').val(product_code);
                 $('#editProductModal input[name="name"]').val(name);
                 $('#editProductModal input[name="quantity"]').val(quantity);
                 $('#editProductModal input[name="price"]').val(price);
                 $('#editProductModal input[name="category_id"]').val(category_id);
+                $('#editProductModal input[name="image"]').val(image);
                 $('#editProductModal input[name="brand_id"]').val(brand_id);
             });
         });

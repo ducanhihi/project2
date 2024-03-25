@@ -43,9 +43,9 @@
     </form>
 
     <div class="col-12 col-md-5 col-lg-8 d-flex align-items-center justify-content-md-end mt-3 mt-md-0">
-        <div class="mr-3 mt-1">
-            <a class="github-button" href="https://github.com/themesberg/simple-bootstrap-5-dashboard" data-color-scheme="no-preference: dark; light: light; dark: light;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star /themesberg/simple-bootstrap-5-dashboard">Star</a>
-        </div>
+{{--        <div class="mr-3 mt-1">--}}
+{{--            <a class="github-button" href="https://github.com/themesberg/simple-bootstrap-5-dashboard" data-color-scheme="no-preference: dark; light: light; dark: light;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star /themesberg/simple-bootstrap-5-dashboard">Star</a>--}}
+{{--        </div>--}}
 
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" style="height: 70px; color: white; background-color: #333333 "  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">

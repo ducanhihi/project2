@@ -9,24 +9,26 @@ class ProductsController extends Controller
 {
     function viewAdminProducts() {
         $allProducts = DB::table('products')
-            ->select(['id','isbn_code', 'name', 'price','quantity','category_id','brand_id','created_at', 'updated_at'])
+            ->select(['id','product_code', 'name', 'price','quantity','category_id','brand_id','created_at', 'updated_at','image'])
             ->get();
         return view('admin.products', ['allProducts' => $allProducts]);
     }
     public function createProduct(Request $request) {
-        $isbn_code = $request->get('isbn_code');
+        $productCode = $request->get('product_code');
         $name = $request->get('name');
         $price = $request->get('price');
         $quantity = $request->get('quantity');
         $categoryId = $request->get('category_id');
+        $image = $request->get('image');
         $brandId = $request->get('brand_id');
         //tao products -> chuyen huong ve home
         DB::table('products')->insert([
-            'isbn_code' => $isbn_code,
+            'product_code' => $productCode,
             'name' => $name,
             'price' => $price,
             'quantity' => $quantity,
             'category_id' => $categoryId,
+            'image' => $image,
             'brand_id' => $brandId,
             'created_at'=> now(),
             'updated_at'=> now(),
@@ -36,6 +38,12 @@ class ProductsController extends Controller
     }
     public function deleteProductById($id){
         DB::table('products') -> delete($id);
+        if ($id == 0) {
+            //cap nhat that bai
+            flash() -> addError('Delete failed!');
+        } else {
+            flash() -> addSuccess('Delete successfully!');
+        }
         return redirect() -> back();
     }
 
@@ -47,20 +55,24 @@ class ProductsController extends Controller
             return redirect('/admin/products');
         }
         //buowc2 capnhat thong tin
-        $isbn_code = $request->get('isbn_code');
+        $productCode = $request->get('product_code');
         $name = $request->get('name');
         $price = $request->get('price');
         $quantity = $request->get('quantity');
         $categoryId = $request->get('category_id');
+        $image = $request->get('image');
+
         $brandId = $request->get('brand_id');
         // buoc 3: cap nhat
         $productsRS = DB::table('products')->where('id', '=', $id) -> update(
             [
-                'isbn_code' => $isbn_code,
+                'product_code' => $productCode,
                 'name' => $name,
                 'price' => $price,
                 'quantity' => $quantity,
                 'category_id' => $categoryId,
+                'image' => $image,
+
                 'brand_id' => $brandId,
                 'created_at'=> now(),
                 'updated_at'=> now(),
