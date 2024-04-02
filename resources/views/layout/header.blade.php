@@ -48,11 +48,13 @@
 {{--        </div>--}}
 
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" style="height: 70px; color: white; background-color: #333333 "  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                <p class="me-2">
-                    {{\Illuminate\Support\Facades\Auth::user()->name}}
-                </p>
-            </button>
+            @auth
+                <button class="btn btn-secondary dropdown-toggle" style="height: 70px; color: white; background-color: #333333 "  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                    <p class="me-2">
+                        {{ \Illuminate\Support\Facades\Auth::user()->name ?? 'Guest' }}
+                    </p>
+                </button>
+            @endauth
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><a class="dropdown-item" href="#">Messages</a></li>

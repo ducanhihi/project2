@@ -5,6 +5,7 @@ use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,11 @@ Route::post('/admin/create/brand', [BrandsController::class, 'createBrand']);
 Route::delete('/home/brand/{id}', [BrandsController::class, 'deleteBrandById']);
 Route::post('/admin/edit/brand/{id}', [BrandsController::class, 'editBrandById']);
 
+//orders-admin
+Route::get('/admin/orders', [\App\Http\Controllers\OrdersController::class, 'viewAdminOrders'])->name('admin.orders');
 
+
+//user-admin
+Route::get('/admin/users', [\App\Http\Controllers\UsersController::class, 'viewAdminUsers'])->name('admin.users');
 // sua fil nay
-Route::post('/search', [\App\Http\Controllers\SearchController::class, 'searchByName']);
+Route::post('/search', [SearchController::class, 'searchByName']);
