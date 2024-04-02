@@ -13,6 +13,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="tom-select.complete.js"></script>
+    <link href="tom-select.bootstrap4.css" rel="stylesheet" />
 </head>
 <body>
     <style>
@@ -361,6 +363,14 @@
         .view-icon-copy-tran-sub > svg{
             pointer-events: none;
             color: #0CB1C7
+        }
+        .ts-wrapper .option .title {
+            display: block;
+        }
+        .ts-wrapper .option .url {
+            font-size: 12px;
+            display: block;
+            color: #a0a0a0;
         }
     </style></head>
 </body>
