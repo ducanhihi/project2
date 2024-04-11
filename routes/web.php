@@ -65,3 +65,7 @@ Route::get('/admin/orders', [\App\Http\Controllers\OrdersController::class, 'vie
 Route::get('/admin/users', [\App\Http\Controllers\UsersController::class, 'viewAdminUsers'])->name('admin.users');
 // sua fil nay
 Route::post('/search', [SearchController::class, 'searchByName']);
+
+//customer
+Route::get('customer/home', [ProductsController::class, 'showProducts'])->name('customer.home');
+Route::get('customer/view-detail', [ProductsController::class, 'viewDetailProduct'])->name('customer.view-detail');
