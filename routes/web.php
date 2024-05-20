@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandsController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SearchController;
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/login');
+    return redirect('/customer/home');
 });
 Route::get('/admin/home', function () {
     return view('admin.home');
@@ -66,6 +68,21 @@ Route::get('/admin/users', [\App\Http\Controllers\UsersController::class, 'viewA
 // sua fil nay
 Route::post('/search', [SearchController::class, 'searchByName']);
 
+
+// Cart
+//Route::get('/', [\App\Http\Controllers\CartController::class, 'viewCart'])->middleware('auth')->name('cart.viewCart');
+Route::get('/add/{product}', [\App\Http\Controllers\CartController::class, 'add'])->middleware('auth')->name('cart.add');
+Route::get('/delete/{product}', [\App\Http\Controllers\CartController::class, 'delete'])->name('cart.delete');
+Route::get('/customer/cart/update/{product}', [\App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
+Route::get('/clear', [\App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
+
+//order
+Route::get('customer/order-detail', [OrderController::class, 'viewOrder'])->name('customer.order-detail');
+Route::post('customer/order-save', [OrderController::class, 'newOrder'])->name('customer.order-save');
+
 //customer
-Route::get('customer/home', [ProductsController::class, 'showProducts'])->name('customer.home');
-Route::get('customer/view-detail', [ProductsController::class, 'viewDetailProduct'])->name('customer.view-detail');
+Route::get('/customer/home', [ProductsController::class, 'showProducts'])->name('customer.home');
+Route::get('/customer/view-detail/{id}', [ProductsController::class, 'viewDetailProduct'])->middleware('auth')->name('customer.view-detail');
+Route::get('/customer/cart', [\App\Http\Controllers\CartController::class, 'viewCart'])->middleware('auth')->name('customer.cart');
+
+

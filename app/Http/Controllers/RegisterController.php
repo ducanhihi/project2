@@ -36,11 +36,14 @@ class RegisterController extends Controller
                 $user->remember_token = Str::random(10); // Tạo remember_token ngẫu nhiên
                 $user->DOB = $request->input('DOB', '2000-01-01');
 
-
                 // Cập nhật thời gian tạo và cập nhật
                 $user->created_at = now();
                 $user->updated_at = now();
                 $user->save();
+
+                // Tạo record mới trong bảng carts
+                $cart = $user->cart()->create();
+
                 flash() -> addSuccess('Đăng ký thành công');
                 return redirect()->route('login');
             }

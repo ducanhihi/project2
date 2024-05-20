@@ -1,70 +1,61 @@
 @extends('layout.app')
 
 @section('content')
-    <body class="">
-    <div class="container-xl">
-        <div class="table-responsive">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Manage <b>Categories</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#addCategoryModal" class="btn btn-success" data-toggle="modal" data-bs-target=""><i class="material-icons"></i> <span>Add New Category</span></a>
-                            <a href="#deleteCategoryModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i> <span>Delete</span></a>
+<body class="">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2>Manage <b>Categories</b></h2>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="#addCategoryModal" class="btn btn-success" data-toggle="modal" data-bs-target=""><i class="material-icons"></i> <span>Add New Category</span></a>
+                                <a href="#deleteCategoryModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i> <span>Delete</span></a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>
-                                <span class="custom-checkbox">
-                                    <input type="checkbox" id="selectAll">
-                                    <label for="selectAll"></label>
-                                </span>
-                        </th>
-                        <th class="text-center fw-bold">ID</th>
-                        <th class="text-center fw-bold">Name</th>
-                        <th class="text-center fw-bold">Created at</th>
-                        <th class="text-center fw-bold">Update at</th>
-                        <th class="text-center fw-bold">Hành động</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($allCategories as $category)
+                    <table id="category_table" data-page-length='2' class="table table-striped table-hover">
+                        <thead>
                         <tr>
-                            <td>
-                            <span class="custom-checkbox">
-                                <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                <label for="checkbox1"></label>
-                            </span>
-                            </td>
-                            <td class="text-center fw-bold">{{$category-> id}}</td>
-                            <td class="text-center fw-bold">{{$category-> name}}</td>
-                            <td class="text-center fw-bold">{{$category-> created_at}}</td>
-                            <td class="text-center fw-bold">{{$category-> created_at}}</td>
-                            <td class="d-flex justify-content-around align-content-center">
-                                <a href="#editCategoryModal" data-id="{{$category -> id}}" data-name="{{$category->name}}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
-                                <a href="#deleteCategoryModal" data-id="{{$category -> id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
-                            </td>
+                            <th>
+                                        <span class="custom-checkbox">
+                                            <input type="checkbox" id="selectAll">
+                                            <label for="selectAll"></label>
+                                        </span>
+                            </th>
+                            <th class="text-center fw-bold">ID</th>
+                            <th class="text-center fw-bold">Name</th>
+                            <th class="text-center fw-bold">Created at</th>
+                            <th class="text-center fw-bold">Update at</th>
+                            <th class="text-center fw-bold">Hành động</th>
                         </tr>
-                    @empty
-                    @endforelse
-                    </tbody>
-                </table>
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
+                        </thead>
+                        <tbody>
+                        @forelse($allCategories as $category)
+                            <tr>
+                                <td>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                        <label for="checkbox1"></label>
+                                    </span>
+                                </td>
+                                <td class="text-center fw-bold">{{$category-> id}}</td>
+                                <td class="text-center fw-bold">{{$category-> name}}</td>
+                                <td class="text-center fw-bold">{{$category-> created_at}}</td>
+                                <td class="text-center fw-bold">{{$category-> created_at}}</td>
+                                <td class="d-flex justify-content-around align-content-center">
+                                    <a href="#editCategoryModal" data-id="{{$category -> id}}" data-name="{{$category->name}}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
+                                    <a href="#deleteCategoryModal" data-id="{{$category -> id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
+                                </td>
+                            </tr>
+                        @empty
+                        @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -101,7 +92,7 @@
                     <form method="POST" action="/admin/edit/category/{{$category -> id}}">
                         @csrf
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Employee</h4>
+                            <h4 class="modal-title">Edit Category</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
@@ -130,7 +121,7 @@
                         @method('DELETE')
                         @csrf
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Employee</h4>
+                            <h4 class="modal-title">Delete Category</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
@@ -170,5 +161,8 @@
                 $('#editCategoryModal input[name="name"]').val(name);
             });
         });
+    </script>
+    <script>
+        let table = new DataTable('#category_table');
     </script>
 @endsection

@@ -10,7 +10,7 @@ class CategoriesController extends Controller
     public function viewAdminCategories() {
         $allCategories = DB::table('categories')
             ->select(['id', 'name','created_at', 'updated_at' ])
-            ->get();
+            ->paginate(5);
         return view('admin.categories', ['allCategories' => $allCategories]);
     }
 
@@ -27,6 +27,12 @@ class CategoriesController extends Controller
     }
     public function deleteCategoryById($id){
         DB::table('categories') -> delete($id);
+        if ($id == 0) {
+            //cap nhat that bai
+            flash() -> addError('Delete failed!');
+        } else {
+            flash() -> addSuccess('Delete successfully!');
+        }
         return redirect() -> back();
     }
 

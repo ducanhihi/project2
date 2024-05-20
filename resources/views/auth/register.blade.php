@@ -26,7 +26,7 @@
         /*    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));*/
         /*}*/
         body {
-            background-image: url('{{ asset('backgroud.jpeg') }}');
+            background-image: url('{{ asset('/image/images (9).jpg') }}');
             background-size: cover;
             background-repeat: no-repeat;
         }
@@ -35,7 +35,7 @@
 <body>
 <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
 <section>
-    <div class="container h-100">
+    <div class="container h-100" style="width: 1000px; height: 300px">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-12 col-xl-11">
                 <div class="card bg-dark text-white" style="border-radius: 1rem;">
@@ -128,7 +128,7 @@
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                                <img src="{{asset('/image/images (12).jpg')}}"
                                      class="img-fluid" alt="Sample image">
 
                             </div>

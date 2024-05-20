@@ -20,29 +20,36 @@ class ProductsController extends Controller
         $brandOptions = DB::table('brands')->pluck('name','id');
         return view('admin.products', ['allProducts' => $allProducts, 'categoryOptions' => $categoryOptions, 'brandOptions' => $brandOptions]);
     }
+
     public function showProducts()
     {
-        $allProducts = DB::table('products') // Lấy danh sách sản phẩm từ cơ sở dữ liệu bằng model Product
-        ->select(['id','product_code', 'name', 'price','quantity','description','image','category_id','brand_id','created_at', 'updated_at'])
-        ->join('categories', 'products.category_id', '=', 'categories.id')
-        ->join('brands', 'products.brand_id', '=', 'brands.id')
-        ->select('products.*', 'categories.name as category_name', 'brands.name as brand_name')
-        ->get();
-        return view('customer.home', ['allProducts' => $allProducts]); // Trả về view 'products' với biến 'products' chứa danh sách sản phẩm
-
-    }
-    public function viewDetailProduct()
-    {
-        $allProducts = DB::table('products') // Lấy danh sách sản phẩm từ cơ sở dữ liệu bằng model Product
-        ->select(['id','product_code', 'name', 'price','quantity','description','image','category_id','brand_id','created_at', 'updated_at'])
+        $allProducts = DB::table('products')
             ->join('categories', 'products.category_id', '=', 'categories.id')
             ->join('brands', 'products.brand_id', '=', 'brands.id')
             ->select('products.*', 'categories.name as category_name', 'brands.name as brand_name')
             ->get();
-        return view('customer.view-detail', ['allProducts' => $allProducts]); // Trả về view 'products' với biến 'products' chứa danh sách sản phẩm
+
+        $allCategories = DB::table('categories')->select('name')->get(); // Lấy danh sách tên category
+        return view('customer.home', ['allProducts' => $allProducts, 'allCategories' => $allCategories]);// Trả về view 'products' với biến 'products' chứa danh sách sản phẩm
 
     }
+    public function viewDetailProduct($id)
+    {
+        $product = DB::table('products')
+            ->select('products.id', 'products.product_code', 'products.name', 'products.price', 'products.quantity', 'products.description', 'products.image', 'products.category_id', 'products.brand_id', 'products.created_at', 'products.updated_at', 'categories.name as category_name', 'brands.name as brand_name')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->join('brands', 'products.brand_id', '=', 'brands.id')
+            ->where('products.id', $id)
+            ->first();
 
+        if ($product) {
+            $categoryOptions = DB::table('categories')->pluck('name', 'id');
+            $brandOptions = DB::table('brands')->pluck('name', 'id');
+            return view('customer.view-detail', ['product' => $product, 'categoryOptions' => $categoryOptions, 'brandOptions' => $brandOptions]);
+        } else {
+            return "Product not found";
+        }
+    }
     public function createProduct(Request $request) {
         $product_code = $request->get('product_code');
         $name = $request->get('name');
@@ -54,11 +61,9 @@ class ProductsController extends Controller
             $image = $request->image->getClientOriginalName();
             $request->image->move(public_path("image"), $image);
         }
-
         $categoryId = $request->get('category_id');
         $brandId = $request->get('brand_id');
         //tao products -> chuyen huong ve home
-
         DB::table('products')->insert([
             'product_code' => $product_code,
             'name' => $name,
@@ -75,14 +80,7 @@ class ProductsController extends Controller
         return redirect()->back();
     }
     public function deleteProductById($id){
-        $product = DB::table('products')->find($id);
-        $imageToDelete = $product->image;
         DB::table('products') -> delete($id);
-
-        $imagePath = public_path("image") . '/' . $imageToDelete;
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
-        }
         return redirect() -> back();
     }
 
@@ -99,24 +97,10 @@ class ProductsController extends Controller
         $price = $request->get('price');
         $quantity = $request->get('quantity');
         $description = $request->get('description');
-//        $image = $product->image; // Giữ nguyên tên ảnh hiện tại mặc định
+        $image = $product->image; // Giữ nguyên tên ảnh hiện tại mặc định
         if ($request->hasFile('image')) {
-            // Xóa ảnh cũ từ thư mục public/image
-            $oldImagePath = public_path("image") . '/' . $product->image;
-            if (file_exists($oldImagePath)) {
-                unlink($oldImagePath);
-            }
-
-            // Lưu ảnh mới vào thư mục public
             $image = $request->file('image')->getClientOriginalName();
             $request->file('image')->move(public_path("image"), $image);
-
-            // Cập nhật trường image trong cơ sở dữ liệu với tên ảnh mới
-            // ...
-        } else {
-            // Tiếp tục sử dụng ảnh cũ mà bạn đã giữ nguyên từ bước trước
-            $image = $product->image;
-            // ...
         }
         $categoryId = $request->get('category_id');
         $brandId = $request->get('brand_id');

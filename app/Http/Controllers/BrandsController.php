@@ -11,7 +11,7 @@ class BrandsController extends Controller
     public function viewAdminBrands() {
         $allBrands = DB::table('brands')
             ->select(['id', 'name','created_at', 'updated_at' ])
-            ->get();
+            ->paginate(5);
         return view('admin.brands', ['allBrands' => $allBrands]);
     }
 
@@ -28,6 +28,12 @@ class BrandsController extends Controller
     }
     public function deleteBrandById($id){
         DB::table('brands') -> delete($id);
+        if ($id == 0) {
+            //cap nhat that bai
+            flash() -> addError('Delete failed!');
+        } else {
+            flash() -> addSuccess('Delete successfully!');
+        }
         return redirect() -> back();
     }
 

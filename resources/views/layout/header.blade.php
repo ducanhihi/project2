@@ -30,7 +30,7 @@
 <nav class="navbar navbar-light bg-light p-3">
     <div class="d-flex col-12 col-md-3 col-lg-2 mb-2 mb-lg-0 flex-wrap flex-md-nowrap justify-content-between">
         <a class="navbar-brand" href="#">
-            Simple Dashboard
+            <img style="height: 70px; width: 90px" src="{{ asset('/image/pngtree-laptop-logo-template-design--laptop-logo-with-modern-frame-png-image_4238431.jpg') }}" alt="Mô tả hình ảnh">
         </a>
         <button class="navbar-toggler d-md-none collapsed mb-3" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -49,6 +49,11 @@
         </div>
 
         <div class="dropdown">
+            @guest
+                <div>
+                    <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                </div>
+            @endguest
             @auth
                 <button class="btn btn-secondary dropdown-toggle" style="height: 70px; color: white; background-color: #333333 "  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
                     <p class="me-2">
@@ -59,10 +64,12 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><a class="dropdown-item" href="#">Messages</a></li>
-                <li><form method="post" action="{{route('logout')}}">
+                <li>
+                    <form method="post" action="{{route('logout')}}">
                         @csrf
                         <button type="submit" class="dropdown-item">Logout</button>
-                    </form></li>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>

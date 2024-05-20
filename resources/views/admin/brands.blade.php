@@ -1,70 +1,61 @@
 @extends('layout.app')
 
 @section('content')
-    <body class="">
-    <div class="container-xl">
-        <div class="table-responsive">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Manage <b>Brands</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#addBrandModal" class="btn btn-success" data-toggle="modal" data-bs-target=""><i class="material-icons"></i> <span>Add New Brand</span></a>
-                            <a href="#deleteBrandModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i> <span>Delete</span></a>
+<body class="">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2>Manage <b>Brands</b></h2>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="#addBrandModal" class="btn btn-success" data-toggle="modal" data-bs-target=""><i class="material-icons"></i> <span>Add New Brand</span></a>
+                                <a href="#deleteBrandModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i> <span>Delete</span></a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>
+                    <table id="brand_table" data-page-length='5' class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>
                                 <span class="custom-checkbox">
                                     <input type="checkbox" id="selectAll">
                                     <label for="selectAll"></label>
                                 </span>
-                        </th>
-                        <th class="text-center fw-bold">ID</th>
-                        <th class="text-center fw-bold">Name</th>
-                        <th class="text-center fw-bold">Created at</th>
-                        <th class="text-center fw-bold">Update at</th>
-                        <th class="text-center fw-bold">Hành động</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($allBrands as $brand)
-                        <tr>
-                            <td>
+                            </th>
+                            <th class="text-center fw-bold">ID</th>
+                            <th class="text-center fw-bold">Name</th>
+                            <th class="text-center fw-bold">Created at</th>
+                            <th class="text-center fw-bold">Update at</th>
+                            <th class="text-center fw-bold">Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($allBrands as $brand)
+                            <tr>
+                                <td>
                             <span class="custom-checkbox">
                                 <input type="checkbox" id="checkbox1" name="options[]" value="1">
                                 <label for="checkbox1"></label>
                             </span>
-                            </td>
-                            <td class="text-center fw-bold">{{$brand-> id}}</td>
-                            <td class="text-center fw-bold">{{$brand-> name}}</td>
-                            <td class="text-center fw-bold">{{$brand-> created_at}}</td>
-                            <td class="text-center fw-bold">{{$brand-> created_at}}</td>
-                            <td class="d-flex justify-content-around align-content-center">
-                                <a href="#editBrandModal" data-id="{{$brand -> id}}" data-name="{{$brand->name}}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
-                                <a href="#deleteBrandModal" data-id="{{$brand -> id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
-                            </td>
-                        </tr>
-                    @empty
-                    @endforelse
-                    </tbody>
-                </table>
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
+                                </td>
+                                <td class="text-center fw-bold">{{$brand-> id}}</td>
+                                <td class="text-center fw-bold">{{$brand-> name}}</td>
+                                <td class="text-center fw-bold">{{$brand-> created_at}}</td>
+                                <td class="text-center fw-bold">{{$brand-> created_at}}</td>
+                                <td class="d-flex justify-content-around align-content-center">
+                                    <a href="#editBrandModal" data-id="{{$brand -> id}}" data-name="{{$brand->name}}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
+                                    <a href="#deleteBrandModal" data-id="{{$brand -> id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
+                                </td>
+                            </tr>
+                        @empty
+                        @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -76,7 +67,7 @@
                 <form action="/admin/create/brand" method="POST">
                     @csrf
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Category</h4>
+                        <h4 class="modal-title">Add Brand</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body">
@@ -101,7 +92,7 @@
                     <form method="POST" action="/admin/edit/brand/{{$brand -> id}}">
                         @csrf
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Employee</h4>
+                            <h4 class="modal-title">Edit Brand</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
@@ -130,7 +121,7 @@
                         @method('DELETE')
                         @csrf
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Employee</h4>
+                            <h4 class="modal-title">Delete Brand</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
@@ -170,5 +161,8 @@
                 $('#editBrandModal input[name="name"]').val(name);
             });
         });
+    </script>
+    <script>
+        let table = new DataTable('#brand_table');
     </script>
 @endsection

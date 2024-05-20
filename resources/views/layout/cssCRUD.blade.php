@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="ASbootstrap-5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('bootstrap-5.3.3/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,6 +17,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="tom-select.complete.js"></script>
     <link href="tom-select.bootstrap4.css" rel="stylesheet" />
+
 </head>
 <body>
     <style>
@@ -33,6 +36,7 @@
             border-radius: 3px;
             min-width: 1000px;
             box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            margin-left: 350px;
         }
         .table-title {
             padding-bottom: 15px;
@@ -41,7 +45,7 @@
             padding: 16px 30px;
             min-width: 100%;
             margin: -20px -25px 10px;
-            border-radius: 3px 3px 0 0;
+            border-radius: 10px;
         }
         .table-title h2 {
             margin: 5px 0 0;
@@ -211,7 +215,9 @@
         }
         /* Modal styles */
         .modal .modal-dialog {
-            max-width: 400px;
+          max-width: 1200px;
+            max-height: 2000px;
+
         }
         .modal .modal-header, .modal .modal-body, .modal .modal-footer {
             padding: 20px 30px;

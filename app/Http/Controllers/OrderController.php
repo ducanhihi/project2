@@ -79,7 +79,6 @@ class OrderController extends Controller
 
 
             // Xóa giỏ hàng
-            DB::table('carts')->where('user_id', $user_id)->delete();
             DB::table('cartdetails')->where('cart_id', $cart->id)->delete();
 
             return redirect()->route('customer.home');

@@ -1,22 +1,24 @@
 @extends('layout.app')
 
 @section('content')
-    <body class="">
-    <div class="container-xl">
-        <div class="table-responsive">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Manage <b>Products</b></h2>
-                        </div>
+<body class="">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2>Manage <b>Products</b></h2>
+                            </div>
                         <div class="col-sm-6">
                             <a href="#addProductModal" class="btn btn-success" data-toggle="modal" data-bs-target=""><i class="material-icons"></i> <span>Add New Product</span></a>
                             <a href="#deleteProductModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i> <span>Delete</span></a>
                         </div>
                     </div>
                 </div>
-                <table class="table table-striped table-hover">
+                <table id="products_table" data-page-length='5' class="w-100 table table-striped table-hover">
                     <thead>
                     <tr>
                         <th>
@@ -55,7 +57,7 @@
                             <img src="{{ asset('image/'.$product->image) }}" alt="{{ $product->image }}" style="width: 100px; height: 80px;">
                         </td>
                         <td>{{$product-> description}}</td>
-                        <td class="d-flex justify-content-around align-content-center">
+                        <td class="text-center fw-bold">
                             <a href="#editProductModal" data-id="{{$product -> id}}" data-product_code="{{$product->product_code}}" data-name="{{$product->name}}" data-quantity="{{$product->quantity}}" data-price="{{$product->price}}" data-category_id="{{$product->category_id}}" data-brand_id="{{$product->brand_id}}" data-image="{{$product->image}}" data-description="{{$product->description}}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
                             <a href="#deleteProductModal" data-id="{{$product -> id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
                         </td>
@@ -64,21 +66,10 @@
                     @endforelse
                     </tbody>
                 </table>
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
+</div>
     <!-- Add Modal HTML -->
     <div id="addProductModal" class="modal fade" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
@@ -86,7 +77,7 @@
                 <form action="/admin/create/product" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Employee</h4>
+                        <h4 class="modal-title">Add Product</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body">
@@ -112,20 +103,19 @@
                         </div>
                         <div class="form-group">
                             <label>CategoryId</label>
-                            <select id="categorySelect" multiple="multiple" name="category_id">
+                            <select id="categorySelect" name="category_id">
                                 @foreach ($categoryOptions as $categoryId => $categoryName)
                                     <option value="{{ $categoryId }}">{{ $categoryName }}</option>
                                 @endforeach
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label>BrandId</label>
-                            <select id="brandSelect" multiple="multiple" name="brand_id">
+                            <label style="margin-left: 20px">BrandId</label>
+                            <select id="brandSelect"  name="brand_id">
                                 @foreach ($brandOptions as $brandId => $brandName)
                                     <option value="{{ $brandId }}">{{ $brandName }}</option>
-                            @endforeach
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="form-group" style="margin-top: 20px">
+                        <div class="form-group">
                             <label>Description</label>
                             <input type="text" name="description" class="form-control" required="">
                         </div>
@@ -139,21 +129,17 @@
         </div>
     </div>
     <!-- Edit Modal HTML -->
-    <div id="editProductModal" class="modal fade">
+    <div id="editProductModal" class="modal fade" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 @if(isset($product) && $product)
                 <form method="POST" action="/admin/edit/product/{{$product -> id}}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
-                        <h4 class="modal-title">Edit Employee</h4>
+                        <h4 class="modal-title">Edit Product</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                      <div class="modal-body">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" name="id" class="form-control" required="" value="{{$product -> id}}">
-                        </div>
                          <div class="form-group">
                             <label>Mã sản phẩm</label>
                             <input type="text" name="product_code" class="form-control" required="" value="{{$product -> product_code}}">
@@ -177,15 +163,21 @@
                          </div>
                         <div class="form-group">
                             <label>CategoryId</label>
-                            <input type="text" name="category_id" class="form-control" required="" value="{{$product -> category_id}}">
+                            <select id="categorySelect" name="category_id">
+                                @foreach ($categoryOptions as $categoryId => $categoryName)
+                                    <option value="{{ $categoryId }}">{{ $categoryName }}</option>
+                            @endforeach
+                            </select>
+                            <label style="margin-left: 20px">BrandId</label>
+                            <select id="brandSelect" name="brand_id">
+                                @foreach ($brandOptions as $brandId => $brandName)
+                                    <option value="{{ $brandId }}">{{ $brandName }}</option>
+                            @endforeach
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label>BrandId</label>
-                            <input type="text" name="brand_id" class="form-control" required="" value="{{$product -> brand_id}}">
-                        </div>
-                         <div class="form-group">
-                             <label>Descriptiom</label>
-                             <input type="text" name="description" class="form-control" required="" value="{{$product -> description}}">
+                         <div class="form-group" >
+                             <label>Description</label>
+                             <input type="text" name="description" placeholder="Description" class="form-control" required="" value="{{$product -> description}}">
                          </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -227,6 +219,7 @@
         </div>
     </div>
     <div id="eJOY__extension_root" class="eJOY__extension_root_class" style="all: unset;"></div>
+</div>
 </body>
     <script>
         $(document).on("click", ".delete", function () {
@@ -260,6 +253,10 @@
                 $('#editProductModal img').attr('src', "{{ asset('image/') }}" + '/' + image);
                 $('#editProductModal input[name="brand_id"]').val(brand_id);
                 $('#editProductModal input[name="description"]').val(description);
+                // Đặt giá trị cho dropdown category_id
+                $('#editProductModal select[name="category_id"]').val(category_id);
+                // Đặt giá trị cho dropdown brand_id
+                $('#editProductModal select[name="brand_id"]').val(brand_id);
             });
         });
     </script>
@@ -275,5 +272,8 @@
 
         var categoryTomSelect = new TomSelect(categorySelect, {options: categoryOptions, ...categorySettings});
         var brandTomSelect = new TomSelect(brandSelect, {options: brandOptions, ...brandSettings});
+    </script>
+    <script>
+        let table = new DataTable('#products_table');
     </script>
 @endsection
