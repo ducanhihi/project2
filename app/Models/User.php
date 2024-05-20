@@ -11,12 +11,20 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    protected $table = 'users'; // Tên bảng trong CSDL
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+
     protected $fillable = [
         'id',
         'name',
