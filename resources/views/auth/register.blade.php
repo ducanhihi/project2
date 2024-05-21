@@ -1,150 +1,147 @@
-<div>
-@if ($errors->any())
-    <div class="alert alert-danger">
-        {{ $errors->first() }}
-    </div>
-@endif
-</div>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{asset('bootstrap-5.3.3/css/bootstrap.min.css')}}">
-    <style>
-        /*.gradient-custom {*/
-        /*    !* fallback for old browsers *!*/
-        /*    background: #6a11cb;*/
 
-        /*    !* Chrome 10-25, Safari 5.1-6 *!*/
-        /*    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));*/
 
-        /*    !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
-        /*    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));*/
-        /*}*/
-        body {
-            background-image: url('{{ asset('/image/images (9).jpg') }}');
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-    </style>
-</head>
-<body>
-<script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
-<section>
-    <div class="container h-100" style="width: 1000px; height: 300px">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-12 col-xl-11">
-                <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                    <div class="card-body p-md-5">
-                        <div class="row justify-content-center">
-                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                <!-- End Toggle Button -->
 
-                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                <!-- Content -->
+                <form class="js-validate" method="post" action="{{route('register')}}">
+                    <!-- Signup -->
+                    <div id="signup" style="display: none; opacity: 0;" data-target-group="idForm">
+                        <!-- Title -->
+                        <header class="text-center mb-7">
+                            <h2 class="h4 mb-0">Welcome to Electro.</h2>
+                            <p>Fill out the form to get started.</p>
+                        </header>
+                        <!-- End Title -->
 
-                                <form class="mx-1 mx-md-4" method="POST" >
-                                    @csrf
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="name" type="text" id="form3Example1c" class="form-control" />
-                                            <label class="form-label" for="form3Example1c">Your Name</label>
-                                        </div>
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <div class="js-form-message js-focus-state">
+                                <label class="sr-only" for="signupEmail">Email</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="signupEmailLabel">
+                                                            <span class="fas fa-user"></span>
+                                                        </span>
                                     </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="email" type="email" id="form3Example3c" class="form-control" />
-                                            <label class="form-label" for="form3Example3c">Your Email</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="address" type="text" id="form3Example3c" class="form-control" />
-                                            <label class="form-label" for="form3Example3c">Your Address</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="DOB" type="date" id="form3Example3c" class="form-control" />
-                                            <label class="form-label" for="form3Example3c">Your DOB</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="password" type="password" id="form3Example4c" class="form-control" />
-                                            <label class="form-label" for="form3Example4c">Password</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="password_confirmation" type="password" id="form3Example4cd" class="form-control" />
-                                            <label class="form-label" for="form3Example4cd">Repeat your password</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="phone" type="text" id="form3Example4cd" class="form-control" />
-                                            <label class="form-label" for="form3Example4cd">Phone</label>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="address" type="text" id="form3Example4cd" class="form-control" />
-                                            <label class="form-label" for="form3Example4cd">Address</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-check d-flex justify-content-center mb-5">
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                                        <label class="form-check-label" for="form2Example3">
-                                            I agree all statements in <a href="#!">Terms of service</a>
-                                        </label>
-                                    </div>
-
-                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="submit" class="btn btn-primary btn-lg">Register</button>
-                                    </div>
-
-                                </form>
-
-                            </div>
-                            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
-                                <img src="{{asset('/image/images (12).jpg')}}"
-                                     class="img-fluid" alt="Sample image">
-
+                                    <input type="email" class="form-control" name="email" id="signupEmail" placeholder="Email" aria-label="Email" aria-describedby="signupEmailLabel" required
+                                           data-msg="Please enter a valid email address."
+                                           data-error-class="u-has-error"
+                                           data-success-class="u-has-success">
+                                </div>
                             </div>
                         </div>
+                        <!-- End Input -->
+
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <div class="js-form-message js-focus-state">
+                                <label class="sr-only" for="signupPassword">Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="signupPasswordLabel">
+                                                            <span class="fas fa-lock"></span>
+                                                        </span>
+                                    </div>
+                                    <input type="password" class="form-control" name="password" id="signupPassword" placeholder="Password" aria-label="Password" aria-describedby="signupPasswordLabel" required
+                                           data-msg="Your password is invalid. Please try again."
+                                           data-error-class="u-has-error"
+                                           data-success-class="u-has-success">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Input -->
+
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <div class="js-form-message js-focus-state">
+                                <label class="sr-only" for="signupConfirmPassword">Confirm Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="signupConfirmPasswordLabel">
+                                                        <span class="fas fa-key"></span>
+                                                    </span>
+                                    </div>
+                                    <input type="password" class="form-control" name="confirmPassword" id="signupConfirmPassword" placeholder="Confirm Password" aria-label="Confirm Password" aria-describedby="signupConfirmPasswordLabel" required
+                                           data-msg="Password does not match the confirm password."
+                                           data-error-class="u-has-error"
+                                           data-success-class="u-has-success">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Input -->
+
+                        <div class="mb-2">
+                            <button type="submit" class="btn btn-block btn-sm btn-primary transition-3d-hover">Get Started</button>
+                        </div>
+
+                        <div class="text-center mb-4">
+                            <span class="small text-muted">Already have an account?</span>
+                            <a class="js-animation-link small text-dark" href="javascript:;"
+                               data-target="#login"
+                               data-link-group="idForm"
+                               data-animation-in="slideInUp">Login
+                            </a>
+                        </div>
+
+                        <div class="text-center">
+                            <span class="u-divider u-divider--xs u-divider--text mb-4">OR</span>
+                        </div>
+
+                        <!-- Login Buttons -->
+                        <div class="d-flex">
+                            <a class="btn btn-block btn-sm btn-soft-facebook transition-3d-hover mr-1" href="#">
+                                <span class="fab fa-facebook-square mr-1"></span>
+                                Facebook
+                            </a>
+                            <a class="btn btn-block btn-sm btn-soft-google transition-3d-hover ml-1 mt-0" href="#">
+                                <span class="fab fa-google mr-1"></span>
+                                Google
+                            </a>
+                        </div>
+                        <!-- End Login Buttons -->
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<script>
-    ClassicEditor
-        .create(document.querySelector('#editor'))
-        .catch(error => {
-            console.error(error);
-        });
-</script>
-</body>
-</html>
+                    <!-- End Signup -->
+
+                    <!-- Forgot Password -->
+                    <div id="forgotPassword" style="display: none; opacity: 0;" data-target-group="idForm">
+                        <!-- Title -->
+                        <header class="text-center mb-7">
+                            <h2 class="h4 mb-0">Recover Password.</h2>
+                            <p>Enter your email address and an email with instructions will be sent to you.</p>
+                        </header>
+                        <!-- End Title -->
+
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <div class="js-form-message js-focus-state">
+                                <label class="sr-only" for="recoverEmail">Your email</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="recoverEmailLabel">
+                                                            <span class="fas fa-user"></span>
+                                                        </span>
+                                    </div>
+                                    <input type="email" class="form-control" name="email" id="recoverEmail" placeholder="Your email" aria-label="Your email" aria-describedby="recoverEmailLabel" required
+                                           data-msg="Please enter a valid email address."
+                                           data-error-class="u-has-error"
+                                           data-success-class="u-has-success">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Form Group -->
+
+                        <div class="mb-2">
+                            <button type="submit" class="btn btn-block btn-sm btn-primary transition-3d-hover">Recover Password</button>
+                        </div>
+
+                        <div class="text-center mb-4">
+                            <span class="small text-muted">Remember your password?</span>
+                            <a class="js-animation-link small" href="javascript:;"
+                               data-target="#login"
+                               data-link-group="idForm"
+                               data-animation-in="slideInUp">Login
+                            </a>
+                        </div>
+                    </div>
+                    <!-- End Forgot Password -->
+                </form>

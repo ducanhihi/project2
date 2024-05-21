@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Header Customer</title>
-</head>
 
-<body>
+
+
 
 <!-- ========== HEADER ========== -->
 <header id="header" class="u-header u-header-left-aligned-nav">
@@ -38,9 +31,19 @@
                                 <!-- Account Sidebar Toggle Button -->`
                                     <div class="dropdown">
                                         @guest
-                                            <div>
-                                                <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
-                                            </div>
+                                            <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link"
+                                               aria-controls="sidebarContent"
+                                               aria-haspopup="true"
+                                               aria-expanded="false"
+                                               data-unfold-event="click"
+                                               data-unfold-hide-on-scroll="false"
+                                               data-unfold-target="#sidebarContent"
+                                               data-unfold-type="css-animation"
+                                               data-unfold-animation-in="fadeInRight"
+                                               data-unfold-animation-out="fadeOutRight"
+                                               data-unfold-duration="500">
+                                                <i class="ec ec-user mr-1"></i> Register <span class="text-gray-50">or</span> Sign in
+                                            </a>
                                         @endguest
                                         @auth
                                             <button class="btn btn-secondary dropdown-toggle" style="height: 40px; color: white; background-color: #F6dd03 "  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
@@ -374,7 +377,7 @@
             </div>
         </div>
         <!-- End Vertical-and-secondary-menu -->
+        @extends('auth.login')
     </div>
 </header>
-</body>
-</html>
+
