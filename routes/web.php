@@ -79,10 +79,13 @@ Route::get('/clear', [\App\Http\Controllers\CartController::class, 'clear'])->na
 //order
 Route::get('customer/order-detail', [OrderController::class, 'viewOrder'])->name('customer.order-detail');
 Route::post('customer/order-save', [OrderController::class, 'newOrder'])->name('customer.order-save');
+Route::post('customer/choose-buy/{product_id}', [OrderController::class, 'chooseBuyOne'])->name('customer.chooseBuy');
+Route::post('customer/buy-now/{product_id}', [OrderController::class, 'buyNow'])->name('customer.buy-now');
+Route::post('customer/buy-save/{product_id}', [OrderController::class, 'buySave'])->name('customer.buy-save');
 
 //customer
 Route::get('/customer/home', [ProductsController::class, 'showProducts'])->name('customer.home');
-Route::get('/customer/view-detail/{id}', [ProductsController::class, 'viewDetailProduct'])->middleware('auth')->name('customer.view-detail');
+Route::get('/customer/view-detail/{id}', [ProductsController::class, 'viewDetailProduct'])->name('customer.view-detail');
 Route::get('/customer/cart', [\App\Http\Controllers\CartController::class, 'viewCart'])->middleware('auth')->name('customer.cart');
 
-
+//
