@@ -79,7 +79,13 @@ Route::get('/clear', [\App\Http\Controllers\CartController::class, 'clear'])->na
 //order
 Route::get('customer/order-detail', [OrderController::class, 'viewOrder'])->name('customer.order-detail');
 Route::post('customer/order-save', [OrderController::class, 'newOrder'])->name('customer.order-save');
-Route::post('customer/choose-buy/{product_id}', [OrderController::class, 'chooseBuyOne'])->name('customer.chooseBuy');
+
+
+Route::get('customer/view-order-history', [\App\Http\Controllers\HistoryController::class, 'viewOrderHistory'])->name('customer.viewOrderHistory');
+Route::get('customer/show-detai-history/{id}', [\App\Http\Controllers\HistoryController::class, 'showDetailHistory'])->name('customer.showDetailHistory');
+
+
+
 
 //customer
 Route::get('/customer/home', [ProductsController::class, 'showProducts'])->name('customer.home');
