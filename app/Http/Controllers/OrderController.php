@@ -42,7 +42,7 @@ class OrderController extends Controller
         }
 
         // Tạo đơn hàng mới
-        $order = DB::table('orders')->insert([
+        $order = DB::table('orders')->insertGetId([
             'name' => $name,
             'phone' => $phone,
             'email' => $email,
@@ -80,7 +80,6 @@ class OrderController extends Controller
 
             // Xóa giỏ hàng
             DB::table('cartdetails')->where('cart_id', $cart->id)->delete();
-
             return redirect()->route('customer.home');
         }
 
