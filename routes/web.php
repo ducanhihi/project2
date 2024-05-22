@@ -76,7 +76,7 @@ Route::get('/delete/{product}', [\App\Http\Controllers\CartController::class, 'd
 Route::get('/customer/cart/update/{product}', [\App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
 Route::get('/clear', [\App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
 
-//order
+//orders
 Route::get('customer/order-detail', [OrderController::class, 'viewOrder'])->name('customer.order-detail');
 Route::post('customer/order-save', [OrderController::class, 'newOrder'])->name('customer.order-save');
 Route::post('customer/buy-now/{product_id}', [OrderController::class, 'buyNow'])->name('customer.buy-now');
@@ -90,4 +90,3 @@ Route::get('/customer/home', [ProductsController::class, 'showProducts'])->name(
 Route::get('/customer/view-detail/{id}', [ProductsController::class, 'viewDetailProduct'])->name('customer.view-detail');
 Route::get('/customer/cart', [\App\Http\Controllers\CartController::class, 'viewCart'])->middleware('auth')->name('customer.cart');
 
-//
