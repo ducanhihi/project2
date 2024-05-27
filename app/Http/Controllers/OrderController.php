@@ -8,6 +8,30 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
 
+    public function viewAdminOrders()
+    {
+        $orders = DB::table('orders')->get();
+
+        return view('admin.orders', compact('orders'));
+    }
+
+
+    public function getOrderStatusClass($status)
+    {
+        $classMap = [
+            'Chờ xác nhận' => 'btn-warning',
+            'Đã xác nhận' => 'btn-primary',
+            'Đang giao' => 'btn-info',
+            'Đã giao' => 'btn-success',
+            'Xác nhận hủy' => 'btn-secondary',
+            'Đã hủy' => 'btn-danger'
+        ];
+
+        return $classMap[$status] ?? 'btn-default';
+    }
+
+
+
     public function buyNow(Request $request, $product_id)
     {
         $product = DB::table('products')
@@ -15,30 +39,10 @@ class OrderController extends Controller
             ->where('products.id', $product_id)
             ->first();
 
-        $quantity = $request->input('quantity', 1); // Lấy số lượng từ request, nếu không có thì mặc định là 1
-        dd($quantity);
+        $quantity = $request->input('quantity', 1);
         // Xử lý logic mua hàng tại đây
+
         return view('customer.buy-now', ['product' => $product, 'quantity' => $quantity]);
-    }
-
-    public function buyInDetail(Request $request, $product_id)
-    {
-        $product = DB::table('products')
-            ->select(['id','product_code', 'name', 'price','quantity','description','image','category_id','brand_id','created_at', 'updated_at'])
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->join('brands', 'products.brand_id', '=', 'brands.id')
-            ->select('products.*', 'categories.name as category_name', 'brands.name as brand_name')
-            ->where('products.id', $product_id)
-            ->get();
-
-        // Lấy danh sách các cặp category_id và category_name từ $allProducts
-        $categoryOptions = DB::table('categories')->pluck('name','id');
-        $brandOptions = DB::table('brands')->pluck('name','id');
-
-        $quantity = $request->input('quantity', 1); // Lấy số lượng từ request, nếu không có thì mặc định là 1
-
-        // Xử lý logic mua hàng tại đây
-        return view('customer.view-detail', ['product' => $product, 'quantity' => $quantity]);
     }
 
 
@@ -48,13 +52,12 @@ class OrderController extends Controller
         $phone = $request->get('phone');
         $email = $request->get('email');
         $address = $request->get('address');
-        $quantity = $request->get('quantity', 1); // Lấy số lượng từ request, nếu không có thì mặc định là 1
-
+        $quantity = $request->input('quantity', 1);
         $landing_code = substr(md5(uniqid()), 0, 10);
 
         $user_id = auth()->user()->id;
 
-// Tạo đơn hàng mới
+        // Tạo đơn hàng mới
         $orderId = DB::table('orders')->insertGetId([
             'name' => $name,
             'phone' => $phone,
@@ -70,10 +73,9 @@ class OrderController extends Controller
             ->select('products.*')
             ->where('products.id', $product_id)
             ->first();
+        $totalAmount = $product->price * $quantity;
 
-        $totalAmount = $product->price;
-
-// Cập nhật tổng giá trị đơn hàng
+        // Cập nhật tổng giá trị đơn hàng
         DB::table('orders')
             ->where('id', $orderId)
             ->update(['total' => $totalAmount]);
@@ -81,13 +83,14 @@ class OrderController extends Controller
         DB::table('orderdetails')->insert([
             'order_id' => $orderId,
             'product_id' => $product->id,
-            'quantity' => $quantity, // Bạn có thể lấy số lượng từ request nếu cần
+            'quantity' => $quantity,
             'price' => $product->price
         ]);
 
-// Xử lý logic mua hàng tại đây
-        return view('customer.buy-now', ['product' => $product]);
+        // Xử lý logic mua hàng tại đây
+        return view('customer.buy-now', ['product' => $product, 'quantity' => $quantity]);
     }
+
 
 
 

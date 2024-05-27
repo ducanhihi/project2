@@ -1,74 +1,88 @@
 @extends('layout.app')
 
 @section('content')
-    <body class="">
-    <div class="container-xl">
-        <div class="table-responsive">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Manage <b>Users</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#addCategoryModal" class="btn btn-success" data-toggle="modal" data-bs-target=""><i class="material-icons"></i> <span>Add New Category</span></a>
-                            <a href="#deleteCategoryModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i> <span>Delete</span></a>
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Quản Lí Người Dùng</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Home</a></li>
+                    <li class="breadcrumb-item active">Người Dùng</li>
+                </ol>
+            </nav>
+            <div class="col-lg-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <div>
+                            <a href="#addUserModal" class="btn" style="background-color: gainsboro"
+                               data-toggle="modal" data-bs-target=""><i
+                                    class="material-icons"></i>
+                                <span>Thêm tài khoản</span></a>
                         </div>
                     </div>
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>
+                    <div class="card-body">
+                        <table id="products_table" data-page-length='5'
+                               class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>
                                 <span class="custom-checkbox">
                                     <input type="checkbox" id="selectAll">
                                     <label for="selectAll"></label>
                                 </span>
-                        </th>
-                        <th class="text-center fw-bold">ID</th>
-                        <th class="text-center fw-bold">Name</th>
-                        <th class="text-center fw-bold">Created at</th>
-                        <th class="text-center fw-bold">Update at</th>
-                        <th class="text-center fw-bold">Hành động</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($allUsers as $user)
-                        <tr>
-                            <td>
+                                </th>
+                                <th class="text-center fw-bold">ID</th>
+                                <th class="text-center fw-bold">Name</th>
+                                <th class="text-center fw-bold">Created at</th>
+                                <th class="text-center fw-bold">Update at</th>
+                                <th class="text-center fw-bold">Hành động</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($allUsers as $user)
+                                <tr>
+                                    <td>
                             <span class="custom-checkbox">
                                 <input type="checkbox" id="checkbox1" name="options[]" value="1">
                                 <label for="checkbox1"></label>
                             </span>
-                            </td>
-                            <td class="text-center fw-bold">{{$user-> id}}</td>
-                            <td class="text-center fw-bold">{{$user-> name}}</td>
-                            <td class="text-center fw-bold">{{$user-> created_at}}</td>
-                            <td class="text-center fw-bold">{{$user-> created_at}}</td>
-                            <td class="d-flex justify-content-around align-content-center">
-                                <a href="#editCategoryModal" data-id="{{$user -> id}}" data-name="{{$user->name}}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
-                                <a href="#deleteCategoryModal" data-id="{{$user -> id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
-                            </td>
-                        </tr>
-                    @empty
-                    @endforelse
-                    </tbody>
-                </table>
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
+                                    </td>
+                                    <td class="text-center fw-bold">{{$user-> id}}</td>
+                                    <td class="text-center fw-bold">{{$user-> name}}</td>
+                                    <td class="text-center fw-bold">{{$user-> created_at}}</td>
+                                    <td class="text-center fw-bold">{{$user-> created_at}}</td>
+                                    <td class="d-flex justify-content-around align-content-center">
+                                        <a href="#editCategoryModal" data-id="{{$user -> id}}"
+                                           data-name="{{$user->name}}" class="edit" data-toggle="modal"><i
+                                                class="material-icons" data-toggle="tooltip" title=""
+                                                data-original-title="Edit"></i></a>
+                                        <a href="#deleteCategoryModal" data-id="{{$user -> id}}" class="delete"
+                                           data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title=""
+                                                                  data-original-title="Delete"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                            @endforelse
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     <!-- Add Modal HTML -->
     <div id="addUserModal" class="modal fade" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
@@ -107,7 +121,8 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" name="name" class="form-control" required="" value="{{$user -> name}}">
+                                <input type="text" name="name" class="form-control" required=""
+                                       value="{{$user -> name}}">
                             </div>
                             <div class="modal-footer">
                                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -161,8 +176,8 @@
         });
     </script>
     <script>
-        $(document).ready(function(){
-            $('.edit').on('click', function(){
+        $(document).ready(function () {
+            $('.edit').on('click', function () {
                 var id = $(this).data('id');
                 var name = $(this).data('name');
 
