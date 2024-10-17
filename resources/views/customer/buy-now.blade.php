@@ -10,8 +10,9 @@
         <div id="shopCartAccordion" class="accordion rounded mb-5">
 
 
-
-            <form action="{{ route('customer.buy-save', ['product_id' => $product -> id])}}" class="js-validate" novalidate="novalidate" method="post">
+            <form action="{{ route('customer.buy-save', ['product_id' => $product -> id])}}" class="js-validate"
+                  novalidate="novalidate" method="post">
+                @csrf
                 <div class="row">
                     <div class="col-lg-5 order-lg-2 mb-7 mb-lg-0">
                         <div class="pl-lg-3 ">
@@ -20,7 +21,7 @@
                                 <div class="p-4 mb-4 checkout-table">
                                     <!-- Title -->
                                     <div class="border-bottom border-color-1 mb-5">
-                                        <h3 class="section-title mb-0 pb-2 font-size-25">Your order</h3>
+                                        <h3 class="section-title mb-0 pb-2 font-size-25">Đơn hàng của bạn</h3>
                                     </div>
                                     <!-- End Title -->
 
@@ -35,24 +36,27 @@
                                         <tbody>
                                         <tr class="cart_item">
                                         <tr class="cart_item">
-                                            <td>{{ $product->name }}&nbsp;<strong class="quantity">× {{ $quantity }}</strong></td>
-                                            <td>{{ number_format($product->price * $quantity, 0, ',', '.') }} VNĐ</td>
+                                            <td>{{ $product->name }}&nbsp;<strong
+                                                    class="quantity">× {{ isset($quantity) ? $quantity : 1 }}</strong>
+                                            </td>
+                                            <td>{{ number_format($product->price * (isset($quantity) ? $quantity : 1), 0, ',', '.') }}
+                                                VNĐ
+                                            </td>
+
                                         </tr>
 
                                         </tr>
                                         </tbody>
                                         <tfoot>
                                         <tr>
-                                            <th>Tổng phụ</th>
-                                            <td>{{ number_format($product->price, 0, ',', '.') }} VNĐ</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Phí vận chuyển</th>
-                                            <td>Giá cố định 30.000VNĐ</td>
+                                            <th>Phí vận chuyển: không tính vào hóa đơn</th>
+                                            <td>Không cố định</td>
                                         </tr>
                                         <tr>
                                             <th>Tổng cộng</th>
-                                            <td>{{ number_format($product->price + 30000, 0, ',', '.') }} VNĐ</td>
+                                            <td class="fw-bold">{{ number_format($product->price * (isset($quantity) ? $quantity : 1), 0, ',', '.') }}
+                                                VNĐ
+                                            </td>
                                         </tr>
                                         </tfoot>
                                     </table>
@@ -66,22 +70,15 @@
                                             <div class="border-bottom border-color-1 border-dotted-bottom">
                                                 <div class="p-3" id="basicsHeadingOne">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" class="custom-control-input" id="stylishRadio1"
-                                                               name="stylishRadio" checked="">
-                                                        <label class="custom-control-label form-label" for="stylishRadio1"
-                                                               data-toggle="collapse" data-target="#basicsCollapseOnee"
-                                                               aria-expanded="true" aria-controls="basicsCollapseOnee">
-                                                            Direct bank transfer
+                                                        <input type="radio" class="custom-control-input" id="stylishRadio1" name="payment" value="Chuyển khoản" checked>
+                                                        <label class="custom-control-label form-label" for="stylishRadio1" data-toggle="collapse" data-target="#basicsCollapseOnee" aria-expanded="true" aria-controls="basicsCollapseOnee">
+                                                            Chuyển Khoản
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div id="basicsCollapseOnee"
-                                                     class="collapse show border-top border-color-1 border-dotted-top bg-dark-lighter"
-                                                     aria-labelledby="basicsHeadingOne" data-parent="#basicsAccordion1">
+                                                <div id="basicsCollapseOnee" class="collapse show border-top border-color-1 border-dotted-top bg-dark-lighter" aria-labelledby="basicsHeadingOne" data-parent="#basicsAccordion1">
                                                     <div class="p-4">
-                                                        Make your payment directly into our bank account. Please use your
-                                                        Order ID as the payment reference. Your order will not be shipped
-                                                        until the funds have cleared in our account.
+                                                        Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi. Vui lòng ghi rõ tên, số điện thoại và số ID đơn hàng của bạn. Đơn đặt hàng của bạn sẽ không được vận chuyển cho đến khi tiền đã được chuyển vào trong tài khoản của chúng tôi.
                                                     </div>
                                                 </div>
                                             </div>
@@ -91,22 +88,15 @@
                                             <div class="border-bottom border-color-1 border-dotted-bottom">
                                                 <div class="p-3" id="basicsHeadingTwo">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" class="custom-control-input"
-                                                               id="secondStylishRadio1" name="stylishRadio">
-                                                        <label class="custom-control-label form-label"
-                                                               for="secondStylishRadio1" data-toggle="collapse"
-                                                               data-target="#basicsCollapseTwo" aria-expanded="false"
-                                                               aria-controls="basicsCollapseTwo">
-                                                            Check payments
+                                                        <input type="radio" class="custom-control-input" id="secondStylishRadio1" name="payment" value="Thanh toán tại cửa hàng">
+                                                        <label class="custom-control-label form-label" for="secondStylishRadio1" data-toggle="collapse" data-target="#basicsCollapseTwo" aria-expanded="false" aria-controls="basicsCollapseTwo">
+                                                            Thanh toán tại cửa hàng
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div id="basicsCollapseTwo"
-                                                     class="collapse border-top border-color-1 border-dotted-top bg-dark-lighter"
-                                                     aria-labelledby="basicsHeadingTwo" data-parent="#basicsAccordion1">
+                                                <div id="basicsCollapseTwo" class="collapse border-top border-color-1 border-dotted-top bg-dark-lighter" aria-labelledby="basicsHeadingTwo" data-parent="#basicsAccordion1">
                                                     <div class="p-4">
-                                                        Please send a check to Store Name, Store Street, Store Town, Store
-                                                        State / County, Store Postcode.
+                                                        Đến trực tiếp Tòa A17, Tạ Quang Bửu, Hà Nội để thanh toán và nhận hàng, vui lòng đến nhận hàng trong vòng 7 ngày sau khi đặt hàng.
                                                     </div>
                                                 </div>
                                             </div>
@@ -116,21 +106,15 @@
                                             <div class="border-bottom border-color-1 border-dotted-bottom">
                                                 <div class="p-3" id="basicsHeadingThree">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" class="custom-control-input"
-                                                               id="thirdstylishRadio1" name="stylishRadio">
-                                                        <label class="custom-control-label form-label"
-                                                               for="thirdstylishRadio1" data-toggle="collapse"
-                                                               data-target="#basicsCollapseThree" aria-expanded="false"
-                                                               aria-controls="basicsCollapseThree">
-                                                            Cash on delivery
+                                                        <input type="radio" class="custom-control-input" id="thirdstylishRadio1" name="payment" value="Thanh toán khi nhận hàng">
+                                                        <label class="custom-control-label form-label" for="thirdstylishRadio1" data-toggle="collapse" data-target="#basicsCollapseThree" aria-expanded="false" aria-controls="basicsCollapseThree">
+                                                            Thanh toán khi nhận hàng
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div id="basicsCollapseThree"
-                                                     class="collapse border-top border-color-1 border-dotted-top bg-dark-lighter"
-                                                     aria-labelledby="basicsHeadingThree" data-parent="#basicsAccordion1">
+                                                <div id="basicsCollapseThree" class="collapse border-top border-color-1 border-dotted-top bg-dark-lighter" aria-labelledby="basicsHeadingThree" data-parent="#basicsAccordion1">
                                                     <div class="p-4">
-                                                        Pay with cash upon delivery.
+                                                        Thanh toán trước tiền cọc 30% giá trị sản phẩm.
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,22 +124,15 @@
                                             <div class="border-bottom border-color-1 border-dotted-bottom">
                                                 <div class="p-3" id="basicsHeadingFour">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" class="custom-control-input"
-                                                               id="FourstylishRadio1" name="stylishRadio">
-                                                        <label class="custom-control-label form-label"
-                                                               for="FourstylishRadio1" data-toggle="collapse"
-                                                               data-target="#basicsCollapseFour" aria-expanded="false"
-                                                               aria-controls="basicsCollapseFour">
-                                                            PayPal <a href="#" class="text-blue">What is PayPal?</a>
+                                                        <input type="radio" class="custom-control-input" id="FourstylishRadio1" name="payment" value="Đặt Trước">
+                                                        <label class="custom-control-label form-label" for="FourstylishRadio1" data-toggle="collapse" data-target="#basicsCollapseFour" aria-expanded="false" aria-controls="basicsCollapseFour">
+                                                            Đặt Trước
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div id="basicsCollapseFour"
-                                                     class="collapse border-top border-color-1 border-dotted-top bg-dark-lighter"
-                                                     aria-labelledby="basicsHeadingFour" data-parent="#basicsAccordion1">
+                                                <div id="basicsCollapseFour" class="collapse border-top border-color-1 border-dotted-top bg-dark-lighter" aria-labelledby="basicsHeadingFour" data-parent="#basicsAccordion1">
                                                     <div class="p-4">
-                                                        Pay via PayPal; you can pay with your credit card if you don’t have
-                                                        a PayPal account.
+                                                        Thanh toán 50% giá trị sản phẩm: đơn hàng sẽ được giữ tối đa 3 tháng từ lúc đặt hàng.
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,15 +146,22 @@
                                                    required="" data-msg="Please agree terms and conditions."
                                                    data-error-class="u-has-error" data-success-class="u-has-success">
                                             <label class="form-check-label form-label" for="defaultCheck10">
-                                                I have read and agree to the website <a href="#" class="text-blue">terms and
+                                                I have read and agree to the website <a href="#" class="text-blue">terms
+                                                    and
                                                     conditions </a>
                                                 <span class="text-danger">*</span>
                                             </label>
                                         </div>
                                     </div>
-                                    <form action="{{ route('customer.buy-save', ['product_id' => $product -> id])}}" method="POST">
+                                    <form action="{{ route('customer.buy-save', ['product_id' => $product -> id])}}"
+                                          method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
+                                        <input type="hidden" name="quantity"
+                                               value="{{ isset($quantity) ? $quantity : 1 }}">
+
+                                        <button type="submit"
+                                                class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">
+                                            Place
                                             order
                                         </button>
                                     </form>
@@ -190,11 +174,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
 
 
                     <div class="col-lg-7 order-lg-1">
@@ -214,7 +193,8 @@
                                             Họ Và Tên
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="name"  required="" data-msg="Hãy nhập họ và tên của bạn."
+                                        <input type="text" class="form-control" name="name" required=""
+                                               data-msg="Hãy nhập họ và tên của bạn."
                                                data-error-class="u-has-error" data-success-class="u-has-success"
                                                autocomplete="off">
                                     </div>
@@ -228,7 +208,8 @@
                                             Số điện thoại
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="phone" required="" data-msg="Hãy nhập số điện thoại."
+                                        <input type="text" class="form-control" name="phone" required=""
+                                               data-msg="Hãy nhập số điện thoại."
                                                data-error-class="u-has-error" data-success-class="u-has-success">
                                     </div>
                                     <!-- End Input -->

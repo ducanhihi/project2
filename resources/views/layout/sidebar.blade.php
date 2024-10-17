@@ -9,110 +9,66 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="">
+                <a class="nav-link collapsed" href="{{route('admin.home')}}">
                     <i class="bi bi-grid"></i>
-                    <span>Dashboard</span>
+                    <span>Báo cáo</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('admin.products')}}">
+                    <i class="fa-brands fa-product-hunt"></i>
+                    <span>Quản lý sản phẩm</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" href="{{route('admin.categories')}}">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Quản lý danh mục</span>
                 </a>
-                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="tables-general.html">
-                            <i class="bi bi-circle"></i><span>General Tables</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="tables-data.html">
-                            <i class="bi bi-circle"></i><span>Data Tables</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.products')}}">
-                            <i class="bi bi-circle"></i><span>Sản Phẩm</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.categories')}}">
-                            <i class="bi bi-circle"></i><span>Thể Loại</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.brands')}}">
-                            <i class="bi bi-circle"></i><span>Thương Hiệu</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.users')}}">
-                            <i class="bi bi-circle"></i><span>Người Dùng</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.orders')}}">
-                            <i class="bi bi-circle"></i><span>Đơn Hàng</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Tables Nav -->
+            </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" href="{{route('admin.brands')}}">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Quản lý thương hiệu</span>
                 </a>
-                <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="charts-chartjs.html">
-                            <i class="bi bi-circle"></i><span>Chart.js</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="charts-apexcharts.html">
-                            <i class="bi bi-circle"></i><span>ApexCharts</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="charts-echarts.html">
-                            <i class="bi bi-circle"></i><span>ECharts</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Charts Nav -->
+            </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" href="{{route('admin.users')}}">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Danh sách người dùng</span>
                 </a>
-                <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="icons-bootstrap.html">
-                            <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="icons-remix.html">
-                            <i class="bi bi-circle"></i><span>Remix Icons</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="icons-boxicons.html">
-                            <i class="bi bi-circle"></i><span>Boxicons</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Icons Nav -->
-
-            <li class="nav-heading">Pages</li>
+            </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>Profile</span>
+                <a class="nav-link collapsed" href="{{route('admin.orders')}}">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Quản lý đơn hàng</span>
                 </a>
-            </li><!-- End Profile Page Nav -->
+            </li><!-- End Dashboard Nav -->
+
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link collapsed" href="{{route('admin.orders')}}">--}}
+{{--                    <i class="bi bi-person"></i>--}}
+{{--                    <span>Profile</span>--}}
+{{--                </a>--}}
+{{--            </li><!-- End Profile Page Nav -->--}}
+
+
+
+
+
+{{--            <li class="nav-heading">Pages</li>--}}
+
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link collapsed" href="{{route('admin.orders')}}">--}}
+{{--                    <i class="bi bi-person"></i>--}}
+{{--                    <span>Profile</span>--}}
+{{--                </a>--}}
+{{--            </li><!-- End Profile Page Nav -->--}}
 
         </ul>
     </aside><!-- End Sidebar-->

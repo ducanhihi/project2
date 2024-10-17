@@ -400,7 +400,13 @@
             font-size: 12px;
             display: block;
             color: #a0a0a0;
+
         }
+        .btn-purple {
+            background-color: #6f42c1;
+            color: #fff;
+        }
+
     </style>
     <script src="{{asset('/adminCSS/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
     <script src="{{asset('/adminCSS/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

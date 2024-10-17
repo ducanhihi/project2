@@ -8,7 +8,7 @@
         <h1>Dashboard</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{asset('admin/home')}}">Home</a></li>
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
         </nav>
@@ -37,21 +37,37 @@
                                     <li><a class="dropdown-item" href="#">This Year</a></li>
                                 </ul>
                             </div>
-
                             <div class="card-body">
-                                <h5 class="card-title">Sales <span>| Today</span></h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cart"></i>
+                                <form action="{{ route('admin.get-dashboard-data') }}" method="GET">
+                                    <h5 class="card-title">Bán hàng <span>| Số đơn hàng bán được</span></h5>
+                                    @php
+                                        $dashboardData = app('App\Http\Controllers\ProductsController')->getDashboardData();
+                                    @endphp
+                                    <div class="d-flex align-items-center">
+                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-cart"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>Hôm nay: {{ $dashboardData['todaySales'] }}</h6>
+                                            <h6>Hôm qua: {{ $dashboardData['yesterdaySales'] }}</h6>
+                                            @if ($dashboardData['salesChangePercentage'] >= 0)
+                                                <span class="text-muted small pt-2 ps-1">Tăng</span><span class="text-success small pt-1 fw-bold">{{ $dashboardData['salesChangePercentage'] }}%</span>
+                                                <span class="text-success small pt-1 fw-bold">(+ {{ $dashboardData['salesChangeCount'] }} orders)</span>
+                                            @else
+                                                <span class="text-muted small pt-2 ps-1">Giảm</span><span class="text-danger small pt-1 fw-bold">{{ abs($dashboardData['salesChangePercentage']) }}%</span>
+                                                <span class="text-danger small pt-1 fw-bold">(- {{ abs($dashboardData['salesChangeCount']) }} orders)</span>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <div class="ps-3">
-                                        <h6>145</h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
-                                    </div>
-                                </div>
+                                </form>
                             </div>
+
+
+
+
+
+
+
 
                         </div>
                     </div><!-- End Sales Card -->
@@ -74,19 +90,25 @@
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                                <h5 class="card-title">Doanh Thu <span>| Tháng này</span></h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-currency-dollar"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>$3,264</h6>
-                                        <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
+                                        <h6>{{ number_format($dashboardData['monthSales'], 0, ',', '.') }} VND</h6>
+                                        @if ($dashboardData['salesPercentageChange'] >= 0)
+                                            <span class="text-muted small pt-2 ps-1">Tăng</span> <span class="text-success small pt-1 fw-bold">{{ $dashboardData['salesPercentageChange'] }}%</span>
+                                        @else
+                                            <span class="text-muted small pt-2 ps-1">Giảm</span> <span class="text-danger small pt-1 fw-bold">{{ abs($dashboardData['salesPercentageChange']) }}%</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
+
+
+
 
                         </div>
                     </div><!-- End Revenue Card -->
@@ -110,20 +132,19 @@
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Customers <span>| This Year</span></h5>
+                                <h5 class="card-title">Khách hàng <span>| Tài khoản</span></h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-people"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>1244</h6>
-                                        <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
-
+                                        <h6>{{ $dashboardData['currentYearCustomers'] }}</h6>
                                     </div>
                                 </div>
-
                             </div>
+
+
                         </div>
 
                     </div><!-- End Customers Card -->
@@ -147,58 +168,36 @@
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+                                <h5 class="card-title">Đơn hàng mới nhất <span>| Tất cả</span></h5>
 
                                 <table class="table table-borderless datatable">
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Customer</th>
-                                        <th scope="col">Product</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col">Khách hàng</th>
+                                        <th scope="col">Giá</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">Ngày đặt</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2457</a></th>
-                                        <td>Brandon Jacob</td>
-                                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                                        <td>$64</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2147</a></th>
-                                        <td>Bridie Kessler</td>
-                                        <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                                        <td>$47</td>
-                                        <td><span class="badge bg-warning">Pending</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2049</a></th>
-                                        <td>Ashleigh Langosh</td>
-                                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                                        <td>$147</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Angus Grady</td>
-                                        <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                                        <td>$67</td>
-                                        <td><span class="badge bg-danger">Rejected</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Raheem Lehner</td>
-                                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                                        <td>$165</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
+                                    @foreach($dashboardData['recentOrders'] as $order)
+                                        <tr>
+                                            <th scope="row"><a href="{{ route('admin.order-detail', $order->id) }}">#{{ $order->id }}</a></th>
+                                            <td>{{ $order->name ?? '-' }}</td>
+                                            <td>{{ number_format($order->total, 0, ',', '.') }} VND</td>
+                                            <td> <p class="badge bg {{ app('App\Http\Controllers\OrderController')->getOrderStatusClass($order['status']) }}"
+                                                    style="font-family: Arial, sans-serif;">{{ $order['status'] }}</p></td>
+                                            <td style="font-size: small">{{ \Carbon\Carbon::parse($order->order_date)->format('Y-m-d') }}</td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
-
                             </div>
+
+
+
+
 
                         </div>
                     </div><!-- End Recent Sales -->
@@ -221,7 +220,7 @@
                             </div>
 
                             <div class="card-body pb-0">
-                                <h5 class="card-title">Top Selling <span>| Today</span></h5>
+                                <h5 class="card-title">Bán chạy <span>| Đặt nhiều nhất trong tháng</span></h5>
 
                                 <table class="table table-borderless">
                                     <thead>
@@ -234,44 +233,17 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas nulla</a></td>
-                                        <td>$64</td>
-                                        <td class="fw-bold">124</td>
-                                        <td>$5,828</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-2.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Exercitationem similique doloremque</a></td>
-                                        <td>$46</td>
-                                        <td class="fw-bold">98</td>
-                                        <td>$4,508</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-3.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Doloribus nisi exercitationem</a></td>
-                                        <td>$59</td>
-                                        <td class="fw-bold">74</td>
-                                        <td>$4,366</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-4.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Officiis quaerat sint rerum error</a></td>
-                                        <td>$32</td>
-                                        <td class="fw-bold">63</td>
-                                        <td>$2,016</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-5.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Sit unde debitis delectus repellendus</a></td>
-                                        <td>$79</td>
-                                        <td class="fw-bold">41</td>
-                                        <td>$3,239</td>
-                                    </tr>
+                                    @foreach ($dashboardData['allProducts'] as $product)
+                                        <tr>
+                                            <th scope="row"><a href="#"><img src="{{ $product->image }}" alt=""></a></th>
+                                            <td><a href="#" class="text-primary fw-bold">{{ $product->name }}</a></td>
+                                            <td>{{ number_format($product->price, 0, ',', '.') }}VND</td>
+                                            <td class="fw-bold">{{ $product->total_sold }}</td>
+                                            <td>{{ number_format($product->total_revenue, 0, ',', '.') }}VND</td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
-
                             </div>
 
                         </div>
@@ -283,78 +255,6 @@
             <!-- Right side columns -->
             <div class="col-lg-4">
 
-                <!-- Recent Activity -->
-                <div class="card">
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>Filter</h6>
-                            </li>
-
-                            <li><a class="dropdown-item" href="#">Today</a></li>
-                            <li><a class="dropdown-item" href="#">This Month</a></li>
-                            <li><a class="dropdown-item" href="#">This Year</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title">Recent Activity <span>| Today</span></h5>
-
-                        <div class="activity">
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">32 min</div>
-                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                <div class="activity-content">
-                                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">56 min</div>
-                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                                <div class="activity-content">
-                                    Voluptatem blanditiis blanditiis eveniet
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">2 hrs</div>
-                                <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                                <div class="activity-content">
-                                    Voluptates corrupti molestias voluptatem
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">1 day</div>
-                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                                <div class="activity-content">
-                                    Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">2 days</div>
-                                <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                                <div class="activity-content">
-                                    Est sit eum reiciendis exercitationem
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">4 weeks</div>
-                                <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                                <div class="activity-content">
-                                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                                </div>
-                            </div><!-- End activity item-->
-
-                        </div>
-
-                    </div>
-                </div><!-- End Recent Activity -->
 
                 <!-- Website Traffic -->
                 <div class="card">
@@ -372,64 +272,56 @@
                     </div>
 
                     <div class="card-body pb-0">
-                        <h5 class="card-title">Website Traffic <span>| Today</span></h5>
+                        <h5 class="card-title"> Thể loại <span>| Được đặt nhiều nhất</span></h5>
 
                         <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
 
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
-                                echarts.init(document.querySelector("#trafficChart")).setOption({
-                                    tooltip: {
-                                        trigger: 'item'
-                                    },
-                                    legend: {
-                                        top: '5%',
-                                        left: 'center'
-                                    },
-                                    series: [{
-                                        name: 'Access From',
-                                        type: 'pie',
-                                        radius: ['40%', '70%'],
-                                        avoidLabelOverlap: false,
-                                        label: {
-                                            show: false,
-                                            position: 'center'
-                                        },
-                                        emphasis: {
-                                            label: {
-                                                show: true,
-                                                fontSize: '18',
-                                                fontWeight: 'bold'
-                                            }
-                                        },
-                                        labelLine: {
-                                            show: false
-                                        },
-                                        data: [{
-                                            value: 1048,
-                                            name: 'Search Engine'
-                                        },
-                                            {
-                                                value: 735,
-                                                name: 'Direct'
+                                fetch('{{ route("admin.get-dashboard-data") }}')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        const trafficData = data.trafficData;
+                                        const chartData = trafficData.map(item => ({
+                                            value: item.value,
+                                            name: item.name
+                                        }));
+
+                                        echarts.init(document.querySelector("#trafficChart")).setOption({
+                                            tooltip: {
+                                                trigger: 'item'
                                             },
-                                            {
-                                                value: 580,
-                                                name: 'Email'
+                                            legend: {
+                                                top: '5%',
+                                                left: 'center'
                                             },
-                                            {
-                                                value: 484,
-                                                name: 'Union Ads'
-                                            },
-                                            {
-                                                value: 300,
-                                                name: 'Video Ads'
-                                            }
-                                        ]
-                                    }]
-                                });
+                                            series: [{
+                                                name: 'Access From',
+                                                type: 'pie',
+                                                radius: ['40%', '70%'],
+                                                avoidLabelOverlap: false,
+                                                label: {
+                                                    show: false,
+                                                    position: 'center'
+                                                },
+                                                emphasis: {
+                                                    label: {
+                                                        show: true,
+                                                        fontSize: '18',
+                                                        fontWeight: 'bold'
+                                                    }
+                                                },
+                                                labelLine: {
+                                                    show: false
+                                                },
+                                                data: chartData
+                                            }]
+                                        });
+                                    });
                             });
+
                         </script>
+
 
                     </div>
                 </div><!-- End Website Traffic -->
@@ -444,17 +336,29 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
-        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>Electro</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Designed by <a href="">BKACADelectroMade</a>
     </div>
 </footer><!-- End Footer -->
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+<script>
+    $.ajax({
+        url: "{{ route('admin.get-dashboard-data') }}",
+        method: 'GET',
+        success: function(response) {
+            $('#todaySales').text(response.todaySales);
+            $('#salesPercentageIncrease').text(response.salesPercentageIncrease + '%');
+        },
+        error: function() {
+            alert('Đã xảy ra lỗi khi lấy dữ liệu thống kê.');
+        }
+    });
+</script>
 @endsection

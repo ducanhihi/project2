@@ -45,7 +45,7 @@ class RegisterController extends Controller
                 $cart = $user->cart()->create();
 
                 flash() -> addSuccess('Đăng ký thành công');
-                return redirect()->route('login');
+                return redirect()->route('customer.home');
             }
         } catch (Exception $e) {
             // Xử lý ngoại lệ nếu có

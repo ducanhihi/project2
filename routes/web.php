@@ -5,6 +5,7 @@ use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SearchController;
@@ -39,8 +40,10 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 ///product
 Route::get('/admin/products', [ProductsController::class, 'viewAdminProducts'])->name('admin.products');
+Route::get('/admin/create/product', [ProductsController::class, 'viewCreateProduct'])->name('admin.create-product');
 Route::post('/admin/create/product', [ProductsController::class, 'createProduct']);
 Route::delete('/home/product/{id}', [ProductsController::class, 'deleteProductById']);
+Route::get('/admin/edit-product/{id}', [ProductsController::class, 'viewEditProduct'])->name('admin.edit-product');
 Route::post('/admin/edit/product/{id}', [ProductsController::class, 'editProductById']);
 // Trong file routes/web.php
 
@@ -50,6 +53,7 @@ Route::post('/admin/edit/product/{id}', [ProductsController::class, 'editProduct
 Route::get('/admin/categories', [CategoriesController::class, 'viewAdminCategories'])->name('admin.categories');
 Route::post('/admin/create/category', [CategoriesController::class, 'createCategory']);
 Route::delete('/home/category/{id}', [CategoriesController::class, 'deleteCategoryById']);
+Route::get('/admin/edit-category/{id}', [CategoriesController::class, 'viewEditCategory'])->name('admin.edit-category');
 Route::post('/admin/edit/category/{id}', [CategoriesController::class, 'editCategoryById']);
 
 
@@ -57,10 +61,11 @@ Route::post('/admin/edit/category/{id}', [CategoriesController::class, 'editCate
 Route::get('/admin/brands', [BrandsController::class, 'viewAdminBrands'])->name('admin.brands');
 Route::post('/admin/create/brand', [BrandsController::class, 'createBrand']);
 Route::delete('/home/brand/{id}', [BrandsController::class, 'deleteBrandById']);
+Route::get('/admin/edit-brand/{id}', [BrandsController::class, 'viewEditBrand'])->name('admin.edit-brand');
 Route::post('/admin/edit/brand/{id}', [BrandsController::class, 'editBrandById']);
 
 //orders-admin
-Route::get('/admin/orders', [\App\Http\Controllers\OrdersController::class, 'viewAdminOrders'])->name('admin.orders');
+Route::get('/admin/orders', [\App\Http\Controllers\OrderController::class, 'viewAdminOrders'])->name('admin.orders');
 
 
 //user-admin
@@ -79,9 +84,14 @@ Route::get('/clear', [\App\Http\Controllers\CartController::class, 'clear'])->na
 //orders
 Route::get('customer/order-detail', [OrderController::class, 'viewOrder'])->name('customer.order-detail');
 Route::post('customer/order-save', [OrderController::class, 'newOrder'])->name('customer.order-save');
-Route::post('customer/buy-now/{product_id}', [OrderController::class, 'buyNow'])->name('customer.buy-now');
+Route::post('customer/buy-now/{product_id}', [OrderController::class, 'buyNow'])->middleware('auth')->name('customer.buy-now');
 Route::post('customer/buy-save/{product_id}', [OrderController::class, 'buySave'])->name('customer.buy-save');
-Route::post('customer/buy-indetail/{product_id}', [OrderController::class, 'buyInDetail'])->name('customer.buy-indetail');
+
+
+
+Route::get('customer/view-order-history', [\App\Http\Controllers\HistoryController::class, 'viewOrderHistory'])->middleware('auth')->name('customer.viewOrderHistory');
+Route::get('customer/show-detai-history/{id}', [\App\Http\Controllers\HistoryController::class, 'showDetailHistory'])->middleware('auth')->name('customer.showDetailHistory');
+Route::post('customer/buy-inCart', [OrderController::class, 'buyInCart'])->name('customer.buy-inCart');
 
 
 
@@ -89,4 +99,26 @@ Route::post('customer/buy-indetail/{product_id}', [OrderController::class, 'buyI
 Route::get('/customer/home', [ProductsController::class, 'showProducts'])->name('customer.home');
 Route::get('/customer/view-detail/{id}', [ProductsController::class, 'viewDetailProduct'])->name('customer.view-detail');
 Route::get('/customer/cart', [\App\Http\Controllers\CartController::class, 'viewCart'])->middleware('auth')->name('customer.cart');
+
+// order-details
+Route::get('/admin/order-detail/{order_id}', [OrderDetailsController::class, 'viewOrderDetail'])->name('admin.order-detail');
+Route::get('/customer/order-detail/{order_id}', [OrderDetailsController::class, 'customerOrderDetail'])->name('customer.order-detail');
+
+//xem đơn hàng của customer
+Route::get('/customer/view-orders', [OrderDetailsController::class, 'viewCustomerOrders'])->name('customer.view-orders');
+Route::post('/admin/accept-order/{order_id}', [OrderController::class, 'acceptOrder'])->name('admin.accept');
+Route::post('/customer/cancel-order2/{order_id}', [OrderController::class, 'cancelOrder'])->name('customer.cancel');
+Route::post('/admin/update-order/{order_id}', [OrderController::class, 'updateOrder'])->name('admin.update-order');
+Route::post('/admin/update-save/{order_id}', [OrderController::class, 'updateSave'])->name('admin.update-save');
+Route::post('/customer/update-done/{order_id}', [OrderController::class, 'doneOrder'])->name('customer.done');
+
+//admin hủy
+Route::post('/admin/cancel-order/{order_id}', [OrderController::class, 'cancelOrder2'])->name('admin.cancel-order');
+
+// thống kê
+Route::get('admin/get-dashboard-data', [ProductsController::class,'getDashboardData'])->name('admin.get-dashboard-data');
+
+
+
+
 

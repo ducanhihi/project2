@@ -28,29 +28,57 @@ class CartController extends Controller
     }
     public function add(Product $product, Request $request)
     {
-        $quantity = $request->quantity ?: 1;
-        // Lấy cart_id từ bảng carts
-        $cartId = Cart::where('user_id', auth()->user()->id)->value('id');
+        if ($request->type === "ADD_TO_CART") {
 
-        // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-        $cartDetail = CartDetail::where([
-            'cart_id' => $cartId,
-            'product_id' => $product->id
-        ])->first();
-        if ($cartDetail) {
-            // Sản phẩm đã có trong giỏ hàng, tăng quantity lên
-            $cartDetail->increment('quantity', $quantity);
-        } else {
-            // Sản phẩm chưa có trong giỏ hàng, thêm mới
-            CartDetail::create([
+            $quantity = $request->quantity ?: 1;
+            if ($quantity > $product->quantity) {
+                // Nếu vượt quá, hiển thị thông báo lỗi
+                flash()->addError('Số lượng sản phẩm "' . $product->name . '" chỉ còn ' . $product->quantity . ' sản phẩm.');
+                return redirect()->back();
+            }
+            // Lấy cart_id từ bảng carts
+            $cartId = Cart::where('user_id', auth()->user()->id)->value('id');
+
+            // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+            $cartDetail = CartDetail::where([
                 'cart_id' => $cartId,
-                'product_id' => $product->id,
-                'quantity' => $quantity
-            ]);
+                'product_id' => $product->id
+            ])->first();
+            if ($cartDetail) {
+                // Sản phẩm đã có trong giỏ hàng, tăng quantity lên
+                $cartDetail->increment('quantity', $quantity);
+            } else {
+                // Sản phẩm chưa có trong giỏ hàng, thêm mới
+                CartDetail::create([
+                    'cart_id' => $cartId,
+                    'product_id' => $product->id,
+                    'quantity' => $quantity
+                ]);
+            }
+            flash() -> addSuccess('Thêm thành công');
+            return redirect()->back();
         }
-        flash() -> addSuccess('Thêm thành công');
-        return redirect()->back();
+        if ($request->type === "DAT_HANG") {
+            $product = DB::table('products')
+                ->select('products.*')
+                ->where('products.id', $product->id)
+                ->first();
+
+            $quantity = $request->input('quantity', 1);
+
+            // Kiểm tra số lượng đặt hàng có vượt quá số lượng trong kho không
+            if ($quantity > $product->quantity) {
+                // Nếu vượt quá, hiển thị thông báo lỗi
+                flash()->addError('Số lượng sản phẩm "' . $product->name . '" chỉ còn ' . $product->quantity . ' sản phẩm.');
+                return redirect()->back();
+            }
+
+            // Xử lý logic mua hàng tại đây
+
+            return view('customer.buy-now', ['product' => $product, 'quantity' => $quantity]);
+        }
     }
+
     public function update($product_id, Request $request)
     {
         $newQuantity = $request->input('quantity');

@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table id="products_table" data-page-length='5'
+                        <table id="brand_table" data-page-length='3'
                                class="table table-sm">
                             <thead>
                             <tr>
@@ -53,10 +53,7 @@
                                     <td class="text-center fw-bold">{{$brand-> created_at}}</td>
                                     <td class="text-center fw-bold">{{$brand-> created_at}}</td>
                                     <td class="d-flex justify-content-around align-content-center">
-                                        <a href="#editBrandModal" data-id="{{$brand -> id}}"
-                                           data-name="{{$brand->name}}" class="edit" data-toggle="modal"><i
-                                                class="material-icons" data-toggle="tooltip" title=""
-                                                data-original-title="Edit"></i></a>
+                                        <a href="{{route('admin.edit-brand',['id'=>$brand->id])}}" ><i class="material-icons"></i></a>
                                         <a href="#deleteBrandModal" data-id="{{$brand -> id}}" class="delete"
                                            data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title=""
                                                                   data-original-title="Delete"></i></a>
@@ -71,110 +68,66 @@
             </div>
         </div>
     </main>
-        <!-- Add Modal HTML -->
-        <div id="addBrandModal" class="modal fade" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="/admin/create/brand" method="POST">
+    <!-- Add Modal HTML -->
+    <div id="addBrandModal" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/admin/create/brand" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Brand</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control" required="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-success" value="Add">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal HTML -->
+    <div id="deleteBrandModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                @if(isset($brand) && $brand)
+                    <form action="/home/brand/{{$brand-> id}}" method="POST">
+                        @method('DELETE')
                         @csrf
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Brand</h4>
+                            <h4 class="modal-title">Delete Brand</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" name="name" class="form-control" required="">
-                            </div>
+                            <p>Are you sure you want to delete these Records?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <input type="submit" class="btn btn-danger" value="Delete">
                         </div>
                     </form>
-                </div>
+                @else
+                    <p>nbnbnb</p>
+                @endif
             </div>
         </div>
-        <!-- Edit Modal HTML -->
-        <div id="editBrandModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    @if(isset($brand) && $brand)
-                        <form method="POST" action="/admin/edit/brand/{{$brand -> id}}">
-                            @csrf
-                            <div class="modal-header">
-                                <h4 class="modal-title">Edit Brand</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="text" name="name" class="form-control" required=""
-                                           value="{{$brand -> name}}">
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                    <input type="submit" class="btn btn-info" value="Save">
-                                </div>
-                            </div>
-                        </form>
-                    @else
-                        <p>dfđff</p>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <!-- Delete Modal HTML -->
-        <div id="deleteBrandModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    @if(isset($brand) && $brand)
-                        <form action="/home/brand/{{$brand-> id}}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <div class="modal-header">
-                                <h4 class="modal-title">Delete Brand</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to delete these Records?</p>
-                                <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-danger" value="Delete">
-                            </div>
-                        </form>
-                    @else
-                        <p>nbnbnb</p>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <div id="eJOY__extension_root" class="eJOY__extension_root_class" style="all: unset;"></div>
-        </body>
-        <script>
-            $(document).on("click", ".delete", function () {
-                var brandId = $(this).data('id');
-                $("#deleteBrandModal form").attr('action', '/home/brand/' + brandId);
-            });
-            $(document).on("click", ".edit", function () {
-                var editID = $(this).data('id');
-                $("#editBrandModal form").attr('action', '/admin/edit/brand/' + editID);
-            });
-        </script>
-        <script>
-            $(document).ready(function () {
-                $('.edit').on('click', function () {
-                    var id = $(this).data('id');
-                    var name = $(this).data('name');
-
-                    $('#editBrandModal input[name="id"]').val(id);
-                    $('#editBrandModal input[name="name"]').val(name);
-                });
-            });
-        </script>
-        <script>
-            let table = new DataTable('#brand_table');
-        </script>
+    </div>
+    <div id="eJOY__extension_root" class="eJOY__extension_root_class" style="all: unset;"></div>
+    </body>
+    <script>
+        $(document).on("click", ".delete", function () {
+            var brandId = $(this).data('id');
+            $("#deleteBrandModal form").attr('action', '/home/brand/' + brandId);
+        });
+    </script>
+    <script>
+        let table = new DataTable('#brand_table');
+    </script>
 @endsection

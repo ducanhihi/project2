@@ -33,9 +33,11 @@
                                 </span>
                                 </th>
                                 <th class="text-center fw-bold">ID</th>
-                                <th class="text-center fw-bold">Name</th>
-                                <th class="text-center fw-bold">Created at</th>
-                                <th class="text-center fw-bold">Update at</th>
+                                <th class="text-center fw-bold">Tên</th>
+                                <th class="text-center fw-bold">Email</th>
+                                <th class="text-center fw-bold">SĐT</th>
+                                <th class="text-center fw-bold">Address</th>
+                                <th class="text-center fw-bold">Ngày sinh</th>
                                 <th class="text-center fw-bold">Hành động</th>
                             </tr>
                             </thead>
@@ -50,8 +52,10 @@
                                     </td>
                                     <td class="text-center fw-bold">{{$user-> id}}</td>
                                     <td class="text-center fw-bold">{{$user-> name}}</td>
-                                    <td class="text-center fw-bold">{{$user-> created_at}}</td>
-                                    <td class="text-center fw-bold">{{$user-> created_at}}</td>
+                                    <td class="text-center fw-bold">{{$user-> email}}</td>
+                                    <td class="text-center fw-bold">{{$user-> phone}}</td>
+                                    <td class="text-center fw-bold">{{$user-> address}}</td>
+                                    <td class="text-center fw-bold">{{$user-> DOB}}</td>
                                     <td class="d-flex justify-content-around align-content-center">
                                         <a href="#editCategoryModal" data-id="{{$user -> id}}"
                                            data-name="{{$user->name}}" class="edit" data-toggle="modal"><i
