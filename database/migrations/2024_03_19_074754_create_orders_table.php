@@ -19,9 +19,11 @@ return new class extends Migration
             $table->string('email');
             $table->dateTime('order_date');
             $table->string('code');
-            $table->decimal('total', 8, 2);
+            $table->integer('total');
             $table->string('landing_code');
             $table->unsignedBigInteger('user_id');
+            $table->string('payment');
+            $table->text('note');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
